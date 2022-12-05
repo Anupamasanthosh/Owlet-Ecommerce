@@ -155,13 +155,13 @@ module.exports={
     {
     console.log(req.params.id)
     console.log(req.files)
-    if(req.files?.length>0)
-   {
+    // if(req.files?.length>0)
+  //  {
       productHelpers.updateImage(req.params.id,req.files).then(()=>
       {
 
       })
-   }
+  //  }
    console.log(req.body)
    let price=req.body.Price
    let offer=req.body.offers
