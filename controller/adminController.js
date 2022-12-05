@@ -439,14 +439,14 @@ module.exports={
     brandEditPost:((req,res,next)=>
     {
       console.log(req.params.id)
-      if(req.file?.filename)
-      {
+      // if(req.file?.filename)
+      // {
         console.log(req.file)
         productHelpers.updateBrandImage(req.params.id,req.file).then(()=>
         {
 
         })
-      }
+      // }
       productHelpers.updateBrand(req.params.id,req.body).then(()=>
       {
         res.redirect('/admin/Brands')
