@@ -243,15 +243,15 @@ module.exports={
     {   console.log(req.body,'hii')
         console.log(req.params.id);
         let id = req.params.id;
-        if(req.file?.filename)
-        {
+        // if(req.file?.filename)
+        // {
           console.log(req.file)
       
           categoryHelpers.updateImage(req.params.id,req.file).then(()=>
           {
             
           })
-        }
+        // }
         categoryHelpers.updateCategory(req.params.id, req.body).then(() => {
           res.redirect("/admin/category");
           
