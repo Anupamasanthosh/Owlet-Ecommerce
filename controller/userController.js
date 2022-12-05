@@ -150,7 +150,8 @@ module.exports = {
   changeProductQuantityGet: (req, res, next) => {
     userHelpers.changequantity(req.body).then(async (response) => {
       userHelpers.getTotalAmount(req.session.users._id).then((data) => {
-        response.total = data[0]?.total;
+        response.total = data[0].total;
+        // response.total = data[0]?.total;
 
         res.json(response);
       });
