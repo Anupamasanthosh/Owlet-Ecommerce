@@ -1,0 +1,87 @@
+{{!-- <header>
+  <nav  class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark sticky-top">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="/admin">Admin Portal</a>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="/admin">All
+              Products</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">All Orders</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/admin/user-manage">All Users</a>
+          </li>
+        </ul>
+        <div class="dropdown ms-2 me-4">
+          <button
+            class="btn btn-secondary dropdown-toggle"
+            type="button"
+            id="dropdownMenuButton1"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >Account
+            {{#if admin}}
+              {{admin.Name}}
+
+            {{else}}
+              Account
+            {{/if}}
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+            {{#if admin}}
+              <li><a class="dropdown-item" href="/admin/adminlogout">Log Out</a></li>
+
+            {{else}}
+              <li><a class="dropdown-item" href="/admin/adminlogin">Log In</a></li>
+            {{/if}}
+
+          </ul>
+        </div>
+      </div>
+      <form class="d-flex">
+        <input
+          class="form-control me-2"
+          type="search"
+          placeholder="Search"
+          aria-label="Search"
+        />
+        <button class="btn btn-outline-success" type="submit">Search</button>
+      </form>
+
+    </div>
+  </nav>
+</header>
+<section> --}}
+
+  <link rel='stylesheet' href='/stylesheets/bodystyle.css' />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+   
+<header>
+<div class="row">
+      <!-- The sidebar -->
+<div class="sidebar">
+  <a href="/admin/adminDash"><i class="fa fa-fw fa-home ms-3"></i> Dashboard</a>
+  <a href="/admin/adminHome"><i class="fa fa-shopping-basket ms-3"></i> Products</a>
+  <a href="/admin/user-manage"><i class="fa fa-fw fa-user ms-3"></i>User Management</a>
+  <a href="/admin/Brands"><i class="fa-solid fa-dragon ms-3"></i>Brands</a>
+  <a href="/admin/category"><i class="fa fa-fw fa-wrench ms-3"></i> Category</a>
+  <a href="/admin/orders"><i class="fa fa-cart-plus ms-3"></i> All Orders</a>
+  <a href="/admin/Coupons"><i class="fa-solid fa-gift ms-3"></i>Coupons</a>
+  <a href="/admin/Offers"><i class="fa-solid fa-champagne-glasses ms-3"></i>Offer Management</a>
+  <a href="/admin/adminlogout" onclick="return confirm('Are you sure want to delete')" ><i class="fa fa-cart-plus ms-3"></i>Logout</a>
+</div>
+</header>

@@ -1,0 +1,131 @@
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<section class="h-100 gradient-custom">
+  <div class="container">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-lg-12">
+        <div class="card" style="border-radius: 10px;">
+          <div class="card-header px-4 py-5">
+            <h5 class="text-muted mb-0">Your Orders </h5>
+          </div>
+            
+          <div class="card-body">
+            
+            <div class="card shadow-0 border mb-4">
+              <div class="card-body">
+               {{#each orders}}
+                <div class="row">
+                  
+                  <div class="col-md-2">
+                    <a href="/viewOrderDetails/{{this._id}}">
+                    {{#each this.products}}
+                     {{#with product.images.[0]}}
+                    <img class="img-fluid mt-1" style="width: 100px;height: 100px;" src="/uploads/{{this.fileName}}">
+                    {{/with}}
+                   
+                     {{/each}}
+                     </a>
+                  </div>
+                  
+                  
+                  <div class="col-md-3 text-center d-flex justify-content-center align-items-center">
+                    {{#each this.products}}
+                    <div class="row">
+                      <p class="text-muted mb-0">{{this.product.Description}}</p>
+                    </div><br>
+                    
+                    {{/each}}
+                  </div>
+                  <div class="col-md-1 text-center d-flex justify-content-center align-items-center">
+                    {{#each this.products}}
+                    <p class="text-muted mb-0 me-3">{{this.quantity}}</p>
+                    {{/each}}
+                  </div>
+                  
+                  <div class="col-md-1 text-center d-flex justify-content-center align-items-center">
+                    
+                    <p class="text-muted mb-0 small">{{this.totalAmount}}</p>
+                 
+                  </div>
+                  <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
+                    <p class="text-muted mb-0 small">{{this.date}}</p>
+                  </div>
+                  <div class="col-md-1 text-center d-flex justify-content-center align-items-center">
+                    <p class="text-muted mb-0 small">{{this.payment}}</p>
+                  </div>
+                  
+                  <div class="col-md-1 text-center d-flex justify-content-center align-items-center">
+                    <div class="badge bg-dark text-wrap" style="width: 6rem;">
+                      <p class="text-muted mb-0 small">{{this.status}}</p>
+                    </div>
+                   
+                  </div>
+                  
+                  {{#ifCond this.status 'Canceled by Admin'}}
+                    {{#ifCond this.status 'canceled by user'}}
+
+                    
+                    <div class="col-md-1  text-center d-flex justify-content-center align-items-center" hidden>
+                        {{#ifCond2 this.status 'Deliverd'}}
+                        
+                   <a href="/downloadInvoice/{{this._id}}">Download Invoice</a><br>
+                   
+                    {{/ifCond2}}
+                    {{#ifCond this.status 'Deliverd'}}
+                      <a onclick="cancelOrder('{{this._id}}')">
+
+                      <p class="text-muted mb-0 small"><i class="fa-solid fa-ban me-3"></i>Cancel</p></a>
+                       {{/ifCond}}
+                    </div>
+                   
+                    
+                    {{/ifCond}}
+                  {{/ifCond}}
+                    {{#ifCond2 this.status 'Pending'}}
+                      <a href="/checkOut">Retry Payment</a>
+                      {{/ifCond2}}
+                  
+                </div>
+             
+                <hr class="mb-4" style="background-color: #e0e0e0; opacity: 1;">
+                {{/each}}
+              </div>
+            </div>
+            
+
+            
+
+            
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<script>
+  function cancelOrder(orderId)
+  {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "Cancel this Order",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+}).then((result) => {
+  if (result.isConfirmed) {
+     $.ajax({
+            url:'/cancel-order/'+orderId,
+            method:'get',
+            success:(response)=>{
+              Swal.fire(
+                'Deleted!',
+                'Your file has been deleted.',
+                'success',
+              )
+              location.reload()
+            }
+        })
+  }
+})
+  }
+</script>

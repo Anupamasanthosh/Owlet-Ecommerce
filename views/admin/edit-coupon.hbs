@@ -1,0 +1,65 @@
+<div class="container me-5 mt-5">
+  <div class="row ">
+      <div class="col">
+        <nav aria-label="breadcrumb" class="bg-light rounded-3 p-3 mb-4">
+          <ol class="breadcrumb mb-0">
+            <li class="breadcrumb-item"><a href="/admin/adminDash">Home</a></li>
+            <li class="breadcrumb-item"><a href="/admin/adminHome">Products</a></li>
+            <li class="breadcrumb-item"><a href="/admin/add-product">Add Product</a></li>
+          </ol>
+        </nav>
+      </div>
+  </div> 
+</div>
+<section class="container me-5 mt-3">
+   
+    <div class="row">
+        <form action="/admin/editCoupons/{{coupon._id}}" method="post">
+        <div class="card mb-4">
+            
+                <div class="card-header py-3">
+                    <h5 class="mb-0">Edit Coupons</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+              <div class="md-form mb-0">
+                <input type="text" id="code" name="code" value="{{coupon.Code}}" class="form-control" >
+                  <label for="code" class="">Coupon Code</label>
+              </div>
+            </div>
+                    <div class="row">
+              <div class="md-form mb-0">
+                <input type="text" id="Discount" name="Discount" value="{{coupon.Discount}}" class="form-control" >
+                  <label for="Discount" class="">Discount on Coupons</label>
+              </div>
+              <div class="md-form mb-0">
+                <input type="text" id="Minimum" name="Minimum" value="{{coupon.Minimum}}" class="form-control" >
+                  <label for="Minimum" class="">Minimum on Coupons</label>
+              </div>
+            </div>
+                    
+                    <div class="row">
+              
+              <div class="col-md-6">
+                        <div class="md-form mb-0">
+                            <input type="date" id="from" value="{{coupon.From}}" name="from" class="form-control">
+                            <label for="from" class="">From</label>
+                        </div>
+              </div>
+              <div class="col-md-6">
+                        <div class="md-form mb-0">
+                            <input type="date" id="to" name="to" value="{{coupon.To}}" class="form-control">
+                            <label for="to" class="">To</label>
+                        </div>
+              </div>
+            </div>
+                </div>
+                <div class="card-header py-3 text-center">
+                    <button type="submit" class="btn btn-outline-dark">Save</button>
+                </div>
+           
+        </div>
+         </form>
+    </div>
+   
+</section>

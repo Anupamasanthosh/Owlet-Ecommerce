@@ -1,0 +1,374 @@
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<section style="background-color: rgb(255, 255, 255);">
+  <div class="container py-5">
+   <div class="row">
+    <div class="col">
+        <nav aria-label="breadcrumb" class="bg-light rounded-3 p-3 mb-4">
+          <ol class="breadcrumb mb-0">
+            <li class="breadcrumb-item"><a href="/users">Home</a></li>
+            <li class="breadcrumb-item"><a href="/profile">Profile</a></li>
+            
+          </ol>
+        </nav>
+      </div>
+   </div>
+
+    <div class="row">
+      {{!-- Side bar Portion Starts from here....... --}}
+      <div class="col-lg-4">
+        <div class="card mb-4">
+          <div class="card-body text-center">
+            <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp" alt="avatar"
+              class="rounded-circle img-fluid" style="width: 150px;">
+
+            <h5 class="my-3">{{userData.name}}</h5>
+            <p class="text-muted mb-1">{{userData.email}}</p>
+            
+            <div class="d-flex justify-content-center mb-2">
+              
+              
+            </div>
+          </div>
+        </div>
+        <div class="card mb-4 mb-lg-0">
+          
+          <div class="card-body p-0">
+            <ul class="list-group list-group-flush rounded-3">
+             <li class="list-group-item d-flex align-items-center p-3 me-3 ms-3">
+                <a href="#Personal"><i class="fa-solid fa-house-user me-3"></i></a>
+                <p class="mb-0">Address</p>
+              </li></a>
+             <li class="list-group-item d-flex align-items-center p-3 me-3 ms-3">
+                <a href="#Payments"><i class="fa-solid fa-dollar-sign me-3"></i></a>
+                <p class="mb-0">Payments</p>
+              </li></a>
+             <li class="list-group-item d-flex align-items-center p-3 me-3 ms-3">
+                <a href="/view-order"><i class="fa-solid fa-bag-shopping me-3"></i></a>
+                <p class="mb-0">My Orders</p>
+              </li></a>
+             <li class="list-group-item d-flex align-items-center p-3 me-3 ms-3">
+                <a href="/wishlists"><i class="fa-solid fa-heart me-3"></i></a>
+                <p class="mb-0">Wishlist</p>
+              </li>
+             
+            </ul>
+          </div>
+        </div> 
+      </div>
+      {{!-- User Data Starts --}}
+      <div class="col-lg-8">
+        {{!-- first section user Data display --}}
+        <div class="card mb-4">
+          <section id="Personal">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-sm-3">
+                <p class="mb-0">Full Name</p>
+              </div>
+              <div class="col-sm-9">
+                <p class="text-muted mb-0">{{userData.name}}</p>
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <p class="mb-0">Email</p>
+              </div>
+              <div class="col-sm-9">
+                <p class="text-muted mb-0">{{userData.email}}</p>
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <p class="mb-0">Phone</p>
+              </div>
+              <div class="col-sm-9">
+                <p class="text-muted mb-0">{{userData.phone}}</p>
+              </div>
+            </div>
+            <hr>
+            
+           
+            
+          </div>
+          </section>
+        </div>
+        {{!-- address display --}}
+        <div class="card mb-4">
+          <section id="Personal">
+          <div class="card-header py-3">
+            <h5 class="mb-0">My Address</h5>
+          </div>
+          <div class="card-body">
+            {{#each userData.Address}}
+            <div class="row">
+              <p>Address:{{this.Address}}</p>
+              <p>Pincode:{{this.Pincode}}</p>
+              <p>State:{{this.State}}</p>
+              <p>Locality:{{this.Locality}}</p>
+              <p>City:{{this.City}}</p>
+              <p><a href="/edit-address/{{this.id}}">
+                <i class="fa-solid fa-pen-to-square me-5"></i>
+                </a>
+                <a onclick="deleteAddress('{{this.id}}')">
+                <i class="fa-solid fa-trash"></i>
+                </a>
+             </p>
+            </div>
+            <hr>
+            {{/each}}
+            
+          
+            
+          
+          </div>
+          <div class="card-header py-3">
+           <button type="button" class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                Add New Addrss
+          </button>
+          </div>
+          </section>
+        </div>
+        {{!-- payment displaying --}}
+        <div class="card mb-4">
+          <section id="Payments">
+          <div class="card-header py-3">
+            <h5 class="mb-0">My Payments</h5>
+          </div>
+          <div class="card-body">
+            
+            <div class="row">
+              <p>COD</p>
+              <p>Razor Pay</p>
+              <p>Paypal</p>
+              
+
+            </div>
+            <hr>
+            
+          </div>
+          <div class="card-header py-3">
+           
+          </div>
+          
+          </section>
+        </div>
+        
+        
+       
+        
+        
+        
+        
+      </div>
+      
+      
+    </div>
+  </div>
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form  id="myform" action="/add-address" method="post">
+         <div class="card-body">
+           
+            <div class="row">
+              
+              <div class="col-md-6">
+                        <div class="md-form mb-0">
+                            <input type="text" id="name" name="name" class="form-control" value="{{users.name}}">
+                            <label for="name" class="">Name</label>
+                        </div>
+              </div>
+              <div class="col-md-6">
+                        <div class="md-form mb-0">
+                            <input type="text" id="phone" name="phone" class="form-control" value="{{users.phone}}">
+                            <label for="phone" class="">Phone</label>
+                        </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                        <div class="md-form mb-0">
+                            <input type="text" id="pincode" name="pincode" class="form-control" value="{{AddressDetails.Pincode}}">
+                            <label for="pincode" class="">Pincode</label>
+                        </div>
+              </div>
+              <div class="col-md-6">
+                        <div class="md-form mb-0">
+                            <input type="text" id="state" name="state" class="form-control" value="{{AddressDetails.State}}">
+                            <label for="state" class="">State</label>
+                        </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="md-form mb-0">
+                <input type="text" id="address" name="address" class="form-control" value="{{AddressDetails.Address}}">
+                  <label for="address" class="">Address</label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                        <div class="md-form mb-0">
+                            <input type="text" id="locality" name="locality" class="form-control" value="{{AddressDetails.Locality}}">
+                            <label for="locality" class="">Locality</label>
+                        </div>
+              </div>
+              <div class="col-md-6">
+                        <div class="md-form mb-0">
+                            <input type="text" id="city" name="city" class="form-control" value="{{AddressDetails.City}}">
+                            <label for="city" class="">City/District</label>
+                        </div>
+              </div>
+              <div class="col-md-6">
+                        <div class="md-form mb-0">
+                            <input type="text" id="id" hidden name="id" class="form-control" value="{{AddressDetails.id}}">
+                            
+                        </div>
+              </div>
+            </div><hr>
+          </div>
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-outline-dark">Save</button>
+      </div>
+        </form>
+    </div>
+  </div>
+</div>
+  <script>
+  const form = document.getElementById("myform"); 
+  const nameError =document.getElementById("name-error");
+  const phoneError=document.getElementById("phone-error");
+  const pincodeError=document.getElementById("pincode-error")
+  const stateError=document.getElementById("state-error")
+  const addressError=document.getElementById("address-error")
+  const localityError=document.getElementById("locality-error")
+  const cityError=document.getElementById("city-error")
+  form.addEventListener('submit', e => {
+   if(validateName()&&validatePhone()&&validatePincode()&&validateState()&&validateAddress()&&validateLocality()&&validateCity()){
+
+  console.log('hai')
+   }
+   
+    else{
+     e.preventDefault() 
+     var error=document.getElementById('submit-error') 
+     error.innerHTML='Fill all fields' 
+     error.style.color='red' 
+     setTimeout(function(){ 
+      error.innerHTML=''
+  },3000); } })
+   function validateName() { 
+    console.log('validate name')
+    var name=document.getElementById('name').value.trim(); 
+    if (name.length==0) {
+  nameError.innerHTML='Name is Required';
+   nameError.style.color='red'
+    return false; } 
+    if (!name.match(/^[A-Za-z]*$/)){ 
+      nameError.innerHTML='Write a Validname';
+       nameError.style.color='red'
+        return false; }
+    nameError.innerHTML='Name is valid'; 
+    nameError.style.color='green' 
+    return true; 
+    } 
+    function validatePhone() {
+    var phone=document.getElementById('phone').value.trim();  
+
+    if (phone.length==0) {
+        phoneError.innerHTML='Phone no is Required';
+        phoneError.style.color='red'
+        return false;
+    }
+    else if (phone.length<10) {
+        phoneError.innerHTML='Write a valid phone no';
+        phoneError.style.color='red'
+        return false;
+    }
+
+    if (!phone.match(/^[0-9]*$/)){
+        phoneError.innerHTML='Write a valid phoneno';
+        phoneError.style.color='red'
+        return false;
+    }
+    
+    phoneError.innerHTML='Phone no is valid';
+    phoneError.style.color='green'
+    return true;
+}
+function validatePincode() {
+    var pincode=document.getElementById('pincode').value.trim();  
+
+    if (phone.length==0) {
+        pincodeError.innerHTML='Pincode  is Required';
+        pincodeError.style.color='red'
+        return false;
+    }
+    else{
+      pincodeError.innerHTML='Phone no is valid';
+    pincodeError.style.color='green'
+    return true;
+    }
+    
+    
+}
+function validateState() { 
+    console.log('validate name')
+    var state=document.getElementById('name').value.trim(); 
+    if (state.length==0) {
+  stateError.innerHTML='state is Required';
+   stateError.style.color='red'
+    return false; } 
+    if (!state.match(/^[A-Za-z]*$/)){ 
+      stateError.innerHTML='Write a Validstate';
+       stateError.style.color='red'
+        return false; }
+    stateError.innerHTML='state is valid'; 
+    stateError.style.color='green' 
+    return true; 
+    } 
+    function deleteAddress(addId)
+    {
+     Swal.fire({
+      title: 'Are you sure?',
+      text: "Delete this address",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+}).then((result) => {
+  if (result.isConfirmed) {
+     $.ajax({
+            url:'/delete-address/'+addId,
+            method:'get',
+            success:(response)=>{
+              Swal.fire(
+                'Deleted!',
+                'Your file has been deleted.',
+                'success',
+              )
+              location.reload()
+            }
+        })
+    
+    }
+})
+    }
+
+</script>
+  
+
+
+
+

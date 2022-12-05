@@ -1,0 +1,246 @@
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
+<section>
+  
+    <div class="row mb-5">
+    <div class="col-md-7">
+     
+      <img src="/uploads/{{category.images}} "style="height: 600px;" alt="" class="w-100" />
+     
+    </div>
+    <!-- /.col-md-6 -->
+    <div class="col-md-5">
+
+      <div class="row align-items-center h-100">
+        <div class="col">
+          
+          <p class="lead">A CURATED EDIT OF STANDOUT TAILORED SUITING AND EVENING WEAR FINISHED IN MONOCHROMATIC TONES FOR THE PARTY SEASON
+            <br /><br />
+            <a href="" class="">Learn More</a>
+          </p>
+
+        </div>
+      </div>
+
+    </div>
+    <!-- /.col-md-6 -->
+
+  </div>
+</section>
+<section>
+   <div class="container">
+         <div class="row">
+            <h2 class="display-3 text-center">Products</h2>
+        </div>
+    </div>
+   
+    <div class="container d-flex justify-content-center mt-100">
+        <div class="row">
+            {{#each product}}
+            <div class="col-md-3"> 
+                <div class="product-wrapper mb-45 text-center"> 
+                    <div class="product-img">
+                        
+                        {{#with images.[0]}}
+                            <img id="catImg" src="/uploads/{{this.fileName}}" alt=""> 
+                        {{/with}}
+                            
+                         {{#if this.offers}} 
+                        <div class="ribbon-2"><i class="text-light me-3 ms-3">{{this.offers}}% Off</i></div>
+                      {{/if}}
+                        <span class="text-center">
+                          {{#if this.Price}}
+                          <i class="fa fa-rupee me-1"></i><s>{{this.Price}}</s>
+                          <i class="text-danger">{{this.actualPrice}}</i>
+                          {{/if}}
+                         
+                         
+                        </span> 
+                        <div class="product-action"> 
+                            <div class="product-action-style"> 
+                                <a href="/product-details/{{this._id}}"> 
+                                    <i class="fa-regular fa-eye"></i>
+                                </a> 
+                                <a onclick="addtoWish('{{this._id}}')"> 
+                                    <i class="fa fa-heart"></i> 
+                                </a> 
+                                <a onclick="addToCart('{{this._id}}')" > 
+                                    <i class="fa fa-shopping-cart"></i> 
+                                </a> 
+                            </div> 
+                        </div> 
+                    </div> 
+                </div>
+            </div>
+            {{/each}} 
+           
+        </div>	
+    </div>
+</section>
+<style>
+  .product-grid{
+   
+    text-align: center;
+}
+.ribbon-2 {
+  --f: 10px; /* control the folded part*/
+  --r: 15px; /* control the ribbon shape */
+  --t: 10px; /* the top offset */
+  
+  position: absolute;
+  inset: var(--t) calc(-1*var(--f)) auto auto;
+  padding: 0 10px var(--f) calc(10px + var(--r));
+  clip-path: 
+    polygon(0 0,100% 0,100% calc(100% - var(--f)),calc(100% - var(--f)) 100%,
+      calc(100% - var(--f)) calc(100% - var(--f)),0 calc(100% - var(--f)),
+      var(--r) calc(50% - var(--f)/2));
+  background: #ff0000;
+  box-shadow: 0 calc(-1*var(--f)) 0 inset #0005;
+}
+#catImg{
+    height: 400px;
+    object-fit:contain;
+    
+    
+}
+.product-grid .product-image{
+    overflow: hidden;
+    position: relative;
+   
+   
+}
+.product-grid .product-image a.image{ display: block; }
+.product-grid .product-image img{
+    width: 100%;
+   
+    transition: all 0.5s ease 0s;
+}
+.product-grid:hover .product-image img{ transform: scale(1.1); }
+.product-grid .product-links{
+    background: #fff;
+    width: 150px;
+    height: 150px;
+    padding: 10px 20px;
+    margin: 0;
+    list-style: none;
+    border-radius: 30px;
+    box-shadow: 1px 0 30px rgba(0, 0, 0, 0.3);
+    opacity: 0;
+    transform: translateX(-50%) translateY(-150%);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transition: all .35s ease;
+}
+.product-grid:hover .product-links{
+    opacity: 1;
+    transform: translateX(-50%) translateY(-50%);
+}
+.product-grid .product-links li{
+    width: 48%;
+    height: 50%;
+    margin: 10px 0;
+    display: inline-block;
+}
+.product-grid .product-links li a{
+    color: #788090;
+    font-size: 18px;
+    transition: all .3s;
+}
+.product-grid .product-links li a:hover{
+    color: #341f97;
+    text-shadow: 4px 4px 0 rgba(0,0,0,0.2);
+}
+.product-grid .product-content{ padding: 15px; }
+.product-grid .price{
+    color: #333;
+    font-size: 15px;
+    font-weight: 500;
+    margin: 0 0 10px;
+}
+.product-grid .price span{
+    color: #999;
+    font-weight: 400;
+    margin: 0 0 0 5px;
+    text-decoration: line-through;
+}
+.product-grid .title{
+    font-size: 15px;
+    font-weight: 500;
+    text-transform: capitalize;
+    margin: 0 0 12px;
+}
+.product-grid .title a{
+    color: #333;
+    transition: all 0.3s ease 0s;
+}
+.product-grid .title a:hover{
+    color: #341f97;
+    text-decoration: underline;
+}
+.product-grid .rating{
+    color: #fbb230;
+    font-size: 13px;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+.product-grid .rating li.far{ color: #999; }
+@media screen and (max-width: 990px){
+    .product-grid{ margin-bottom: 30px; }
+}
+</style>
+<style>
+
+.mt-100{margin-top:100px}.product-wrapper, .product-img{overflow: hidden;position: relative}.mb-45{margin-bottom: 45px}.product-action{bottom: 0px;left: 0;opacity: 0;position: absolute;right: 0;text-align: center;transition: all 0.6s ease 0s}.product-wrapper{border-radius: 10px}.product-img >span{background-color: #fff;box-shadow: 0 0 8px 1.7px rgba(0, 0, 0, 0.06);color: #333;display: inline-block;font-size: 12px;font-weight: 500;left: 20px;letter-spacing: 1px;padding: 3px 12px;position: absolute;text-align: center;text-transform: uppercase;top: 20px}.product-action-style{background-color: #fff;box-shadow: 0 0 8px 1.7px rgba(0, 0, 0, 0.06);display: inline-block;padding: 16px 2px 12px}.product-action-style >a{color: #979797;line-height: 1;padding: 0 21px;position: relative}.product-action-style >a.action-plus{font-size: 18px}.product-wrapper:hover .product-action{bottom: 20px;opacity: 1}
+</style>
+
+<script>
+   
+     function addToCart(proId)
+  {
+      $.ajax({
+      url:'/add-to-cart/'+proId,
+      method:'get',
+      success:(response)=>
+      {
+        
+        Swal.fire({
+         position: 'top-end',
+        icon: 'success',
+        title: 'Product added to cart',
+        showConfirmButton: false,
+        timer: 1500
+        })
+        
+        if(response.status)
+        {
+          let count=$('#cart-count').html()
+          count=parseInt(count)+1
+          $("#cart-count").html(count)
+        }
+        {{!-- location.reload() --}}
+       
+      }
+    })
+  }
+  function addtoWish(proId)
+  {
+    $.ajax({
+      url:'/wishlist/'+proId,
+      method:'get',
+      success:(response)=>
+      {
+        Swal.fire({
+        position: 'bottom-end',
+        icon: 'Success',
+        title:'Product added to Wishlist',
+        showConfirmButton: false,
+        timer: 1500
+        })
+       
+      }
+    })
+  }
+</script>

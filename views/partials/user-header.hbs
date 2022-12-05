@@ -1,0 +1,132 @@
+
+<header class="">
+  <nav class="navbar navbar-expand-lg navbar-dark shadow-5-strong">
+    <div class="container-fluid">
+      <a class="navbar-brand ms-3" href="/users" style="color: black;"><img src="/images/Screenshot__186_-removebg-preview.png" style="width:80px;height:80px;"></a>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-4 mb-lg-0">
+           {{#if users}}
+          <li class="nav-item">
+            <a class="nav-link" href="/cart" style="color: black;"><span class="me-1">My Cart</span><i
+                  class="fa-solid fa-cart-shopping position-relative"
+                >
+                  <span
+                    class="position-absolute text-center top-0 start-100 translate-middle"
+                    style="width: 5px;height:20px;margin-bottom: 10px; color:rgb(8, 8, 8)" id="cart-count"
+                  >
+                    {{cartCount}}
+                 
+                    
+                 
+                    
+                  </span></i></a>
+          </li>
+          <li class="nav-item ms-5">
+            <a class="nav-link" style="text-decoration: none;color:black" href="/view-order"><span class="me-1">My Orders</span><i class="fa-sharp fa-solid fa-bag-shopping"></i></a>
+          </li>
+          <li class="nav-item ms-5">
+             <a class="nav-link" style="text-decoration: none;color:black" href="/wishlists"><span class="me-1">My Wishlist</span><i
+                class="fa-solid fa-heart"
+              ></i></a>
+          </li>
+         
+
+           {{/if}}
+
+        </ul>
+
+      </div>
+      
+      {{! <form class="d-flex">
+          <input class="form-control me-2" placeholder="Search" id="keyWord" />
+          <button
+            type="button"
+            class="btn btn-outline-light"
+            onclick="myFunction()"
+          >Search</button>
+          <script>
+            function myFunction() { console.log("function called") var
+            key=document.getElementById("keyWord").value if(key){ var
+            url="/search-result/" console.log("function called", url+key)
+            location.href=url+key }else{ location.href='/' } }
+          </script>
+
+        </form> }}
+      <div class="dropdown ms-2">
+        <button
+          class="btn btn-secondary dropdown-toggle"
+          type="button"
+          id="dropdownMenuButton1"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+        >
+          {{#if users}}
+            {{users.name}}
+          {{else}}
+            Account
+          {{/if}}
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+          {{#if users}}
+             
+           
+          <li>
+            <a class="nav-link" style="text-decoration: none;color:black" href="/profile"><i class="fa-solid fa-user"></i>Profile</a>
+          </li>
+            <li><a class="dropdown-item" onclick="logOut()" ><i class="fa-solid fa-right-from-bracket"></i>Logout</a></li>
+            {{!-- {{else}} --}}
+          {{else}}
+            <li><a class="dropdown-item" href="/">Login</a></li>
+            <li><a class="dropdown-item" href="/signup">Sign Up</a></li>
+          {{/if}}
+
+        </ul>
+
+      </div>
+    </div>
+  </nav>
+
+</header> 
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+  function logOut()
+  {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "Logout from Owlet",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Logout for now',
+}).then((result) => {
+  if (result.isConfirmed) {
+     $.ajax({
+            url:'/logout',
+            method:'get',
+            success:(response)=>{
+              Swal.fire(
+                'Logout Successfully',
+                
+                'success',
+              )
+              location.reload()
+            }
+        })
+    
+    }
+})
+  }
+      
+</script>

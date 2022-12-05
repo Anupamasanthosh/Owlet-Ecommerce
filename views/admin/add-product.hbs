@@ -1,0 +1,250 @@
+<div class="container me-5 mt-5">
+  <div class="row ">
+      <div class="col">
+        <nav aria-label="breadcrumb" class="bg-light rounded-3 p-3 mb-4">
+          <ol class="breadcrumb mb-0">
+            <li class="breadcrumb-item"><a href="/admin/adminDash">Home</a></li>
+            <li class="breadcrumb-item"><a href="/admin/adminHome">Products</a></li>
+            <li class="breadcrumb-item"><a href="/admin/add-product">Add Product</a></li>
+          </ol>
+        </nav>
+      </div>
+  </div> 
+</div>
+
+  <section class="container me-5 mt-3">
+    <div class="row">
+      <div class="mask d-flex align-items-center h-100">
+        <div class="container">
+          <div class="row justify-content-center">
+            <div class="col-12">
+              <div class="card shadow-2-strong mb-5" style="background-color: #f5f7fa;">
+                <div class="card-header">
+                  <h5 class="text-muted mb-0 text-center">Add Products</h5>
+                </div>
+                <div class="card-body">
+                  <form
+                    action="/admin/add-product"
+                    method="post"
+                    enctype="multipart/form-data"
+                    id="myForm"
+                    >
+                    <div class="row">
+                      <div class="col-md-6">
+                    <label for="">Name</label>
+                    <input type="text" class="form-control col-xs-4" name="Name" id="Name" onkeyup="validateName()" />
+                    <span id="name-error"></span><br>
+                    </div>
+                    <div class="col-md-6">
+                    <label for="" class="">Price</label>
+                    <input type="number" class="form-control" name="Price" id="Price" onkeyup="validatePrice()" />
+                    <span id="price-error"></span><br>
+                    </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6">
+                    <label for="" class="mt-4">Catagory</label>
+          
+                    <select class="form-select" id="Category" name="Category">
+                      {{#each category}}
+                    <option value="{{this.Name}}" selected>{{this.Name}}</option>
+                      {{/each}}
+                    </select>
+                   
+                    </div>
+                    <div class="col-md-6">
+                      <label for="" class="mt-4">Quantity</label>
+                    <input type="text" class="form-control" name="Quantity"  id="Quantity" onkeyup="validateQuantity()"/>
+                    <span id="quantity-error"></span><br>
+                    </div>
+                      </div>
+                      <div class="row">
+                      <div class="col-md-6">
+                        <label for="" class="mt-4">Description</label>
+                    <input type="text" class="form-control" name="Description" id="Description" onkeyup="validateDescription()" />
+                    <span id="description-error"></span><br>
+                    </div>
+                    <div class="col-md-6">
+                      <label for="" class="mt-4">Brand</label>
+                     <select class="form-select" id="brand" name="brand">
+                      {{#each brand}}
+                    <option value="{{this.Name}}" selected>{{this.Name}}</option>
+                      {{/each}}
+                    </select>
+                    </div>
+                      </div>
+                    
+                    <div class="row">
+                      <div class="col-md-6">
+                    <label for="" class="mt-4">Product Offers</label>
+                    <input type="text" class="form-control" name="offers" id="offers"/>
+                    </div>
+                    <div class="col-md-6">
+                    <label for="" class="mt-4">Image</label>
+         
+                    <input type="file" class="form-control" name="image" id="image" multiple onkeyup="validateImage()"/>
+                    <span id="image-error"></span><br>
+                    </div>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-dark mt-4 ">Add Product</button>
+                    <span id="submit-error"></span><br>
+                  
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  
+
+
+<script>
+  const form = document.getElementById("myForm"); 
+  const nameError =document.getElementById("name-error");
+  const priceError =document.getElementById("price-error");
+  const descriptionError =document.getElementById("description-error");
+  const quantityError=document.getElementById("quantity-error")
+
+  const imageError=document.getElementById("image-error");
+  form.addEventListener('submit', e => {
+   if(validateName()&&validatePrice()&&validateDescription()&&validateImage()&&validateQuantity())
+   {
+      console.log('hai') 
+    }
+    else{
+     e.preventDefault() 
+     var error=document.getElementById('submit-error') 
+     error.innerHTML='Fill all fields' 
+     error.style.color='Red' 
+     setTimeout(function()
+     { 
+      error.innerHTML=''
+
+      },3000);
+    } 
+    })
+    function validateName()
+   { 
+    console.log('validate name')
+    var name=document.getElementById('Name').value.trim(); 
+    if (name.length==0)
+     {
+    nameError.innerHTML='Name is Required';
+    nameError.style.color='red'
+    return false; 
+    } 
+    else{
+      nameError.innerHTML='Name is valid'; 
+    nameError.style.color='green' 
+    return true;
+    }
+   }
+   function validatePrice()
+   { 
+    console.log('validate price')
+    var price=document.getElementById('Price').value.trim(); 
+    if (price.length==0)
+     {
+    priceError.innerHTML='Price is Required';
+    priceError.style.color='red'
+    return false; 
+    } 
+    else if(isNaN(price))
+    {
+    priceError.innerHTML='Please enter a numeric value';
+    priceError.style.color='red'
+    return false; 
+    }
+    else {
+    priceError.innerHTML='Price is valid'; 
+    priceError.style.color='green' 
+    return true;
+    }
+   }
+   function validateDescription()
+   {
+    console.log('validate Description')
+    var description=document.getElementById('Description').value.trim();
+    if(description.length==0)
+    {
+      descriptionError.innerHTML='Description is required'
+      descriptionError.style.color='red'
+      return false
+    }
+    else{
+    descriptionError.innerHTML='Description is valid'; 
+    descriptionError.style.color='green' 
+    return true;
+    }
+   }
+   function validateQuantity()
+   { 
+    console.log('validate quantity')
+    var quantity=document.getElementById('Quantity').value.trim(); 
+    if (quantity.length==0)
+     {
+    quantityError.innerHTML='Quantity is Required';
+    quantityError.style.color='red'
+    return false; 
+    } 
+    else if(isNaN(quantity))
+    {
+    quantityError.innerHTML='Please enter a numeric value';
+    quantityError.style.color='red'
+    return false; 
+    }
+    else {
+    quantityError.innerHTML='quantity is valid'; 
+    quantityError.style.color='green' 
+    return true;
+    }
+   }
+   function validateImage()
+   {
+    console.log('validate image')
+    
+    var fileInput=document.getElementById('image');
+     var allowedExtensions =
+        /(\.jpg|\.jpeg|\.png|\.gif|\.webp)$/i;
+     var filePath = fileInput.value;
+        if (!allowedExtensions.exec(filePath)) 
+        {
+          imageError.innerHTML="Invalid file type";
+          imageError.style.color='Red' 
+          fileInput.value = '';
+          return false;
+        }
+        else if(document.getElementById('image').files.length==0)
+        {
+          imageError.innerHTML="No files selected"
+          imageError.style.color='red'
+          return false
+        }
+        else{
+         imageError.innerHTML='File is valid'; 
+         imageError.style.color='green' 
+          return true;
+        }
+    
+  }
+{{!-- $('#myForm').submit((e)=>
+{
+  console.log('hello from add products')
+  e.preventDefault()
+  $.ajax({
+    url:'/admin/add-product',
+    method:'post',
+    data:$('#myForm').serialize(),
+    success:(response)=>
+    {
+      alert('product added successfully')
+    }
+  })
+}) --}}
+
+</script>

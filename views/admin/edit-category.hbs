@@ -1,0 +1,62 @@
+<div class="content">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <h1 class="mt-4">Edit Category</h1>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <form
+          action="/admin/edit-category/{{category._id}}"
+          method="post"
+          enctype="multipart/form-data"
+        >
+
+            <label for="">Name</label>
+            <input
+              type="text"
+              class="form-control col-xs-4"
+              name="Name"
+              value="{{category.Name}}"
+            />
+
+            <label for="" class="mt-4">Description</label>
+            <input
+              type="text"
+              class="form-control mb-4"
+              name="Description"
+              value="{{category.Description}}"
+            />
+
+             <label for="" class="mt-4">Offers</label>
+            <input
+              type="text"
+              class="form-control mb-4"
+              name="offer"
+              value="{{category.offer}}"
+            />
+
+            <label for="" class="mt-4 mb-4">Image</label>
+           
+              <img style="width: 50px;height:50px" src="/uploads/{{category.images}}">
+              
+            <input
+              type="file"
+              class="form-control mt-4"
+              name="image"
+              onchange="newImage(event)"
+            />
+            <button type="submit" class="btn btn-dark mt-4">Save</button>
+          
+        </form>
+
+        </div>
+    </div>
+  </div>
+</div>
+<script>
+  function newImage(event) {
+  document.getElementById('imageChange').src=URL.createObjectURL(event.target.files[0])
+  }
+</script>

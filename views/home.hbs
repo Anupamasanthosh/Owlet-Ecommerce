@@ -1,0 +1,354 @@
+<div class="container">
+	<br>  <p class="text-center">More bootstrap 4 components on <a href="http://bootstrap-ecommerce.com/"> Bootstrap-ecommerce.com</a></p>
+<hr>
+
+	
+<div class="card">
+	<div class="row">
+		<aside class="col-sm-5 border-right">
+<article class="gallery-wrap"> 
+<div class="img-big-wrap">
+  <div> <a href="#"><img src="https://s9.postimg.org/tupxkvfj3/image.jpg"></a></div>
+</div> <!-- slider-product.// -->
+<div class="img-small-wrap">
+  <div class="item-gallery"> <img src="https://s9.postimg.org/tupxkvfj3/image.jpg"> </div>
+  <div class="item-gallery"> <img src="https://s9.postimg.org/tupxkvfj3/image.jpg"> </div>
+  <div class="item-gallery"> <img src="https://s9.postimg.org/tupxkvfj3/image.jpg"> </div>
+  <div class="item-gallery"> <img src="https://s9.postimg.org/tupxkvfj3/image.jpg"> </div>
+</div> <!-- slider-nav.// -->
+</article> <!-- gallery-wrap .end// -->
+		</aside>
+		<aside class="col-sm-7">
+<article class="card-body p-5">
+	<h3 class="title mb-3">Original Version of Some product name</h3>
+
+<p class="price-detail-wrap"> 
+	<span class="price h3 text-warning"> 
+		<span class="currency">US $</span><span class="num">1299</span>
+	</span> 
+	<span>/per kg</span> 
+</p> <!-- price-detail-wrap .// -->
+<dl class="item-property">
+  <dt>Description</dt>
+  <dd><p>Here goes description consectetur adipisicing elit, sed do eiusmod
+tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+quis nostrud exercitation ullamco </p></dd>
+</dl>
+<dl class="param param-feature">
+  <dt>Model#</dt>
+  <dd>12345611</dd>
+</dl>  <!-- item-property-hor .// -->
+<dl class="param param-feature">
+  <dt>Color</dt>
+  <dd>Black and white</dd>
+</dl>  <!-- item-property-hor .// -->
+<dl class="param param-feature">
+  <dt>Delivery</dt>
+  <dd>Russia, USA, and Europe</dd>
+</dl>  <!-- item-property-hor .// -->
+
+<hr>
+	<div class="row">
+		<div class="col-sm-5">
+			<dl class="param param-inline">
+			  <dt>Quantity: </dt>
+			  <dd>
+			  	<select class="form-control form-control-sm" style="width:70px;">
+			  		<option> 1 </option>
+			  		<option> 2 </option>
+			  		<option> 3 </option>
+			  	</select>
+			  </dd>
+			</dl>  <!-- item-property .// -->
+		</div> <!-- col.// -->
+		<div class="col-sm-7">
+			<dl class="param param-inline">
+				  <dt>Size: </dt>
+				  <dd>
+				  	<label class="form-check form-check-inline">
+					  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
+					  <span class="form-check-label">SM</span>
+					</label>
+					<label class="form-check form-check-inline">
+					  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
+					  <span class="form-check-label">MD</span>
+					</label>
+					<label class="form-check form-check-inline">
+					  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
+					  <span class="form-check-label">XXL</span>
+					</label>
+				  </dd>
+			</dl>  <!-- item-property .// -->
+		</div> <!-- col.// -->
+	</div> <!-- row.// -->
+	<hr>
+	<a href="#" class="btn btn-lg btn-primary text-uppercase"> Buy now </a>
+	<a href="#" class="btn btn-lg btn-outline-primary text-uppercase"> <i class="fas fa-shopping-cart"></i> Add to cart </a>
+</article> <!-- card-body.// -->
+		</aside> <!-- col.// -->
+	</div> <!-- row.// -->
+</div> <!-- card.// -->
+
+
+</div>
+
+
+
+{{!-- <section class="section-products">
+  <div class="container">
+  <div class="row">
+    
+     
+   
+        
+        {{#each product}}
+        <div class="col-md-3 mt-5">
+          <div class="product">
+            <div class="top">
+             {{#with images.[0]}}
+              <img class="img-product" src="/uploads/{{this.fileName}}">
+              
+              
+            
+              {{/with}}
+             
+              
+            
+              this.
+                <a href="/product-details/{{this._id}}" class="btn btn-view"><i class="fas fa-eye icon"></i></a>
+                {{!-- <a href="/wishlist/{{this._id}}" class="btn btn-love"><i class="fas fa-heart icon" id="fa-hrt"></i></a> --}}
+                <a onclick= class="btn btn-love"><i class="fas fa-heart icon" id="fa-hrt"></i></a>
+                {{!-- <a href="/add-to-cart/{{this._id}}" class="btn btn-buy"><i class="fas fa-shopping-cart icon" ></i></a> --}}
+                 <a class="btn btn-buy"><i class="fas fa-shopping-cart icon" ></i></a>
+              </div>
+            <div class="bottom">
+              <h3 class="product-name">{{this.Name}}</h3>
+              {{#ifCond this.actualPrice null}}
+              {{#ifCond2 this.actualPrice this.Price}}
+                  <h4 class="product-price"><span>{{this.Price}}</span></h4>
+              {{/ifCond2}}
+              <h4 class="product-price"><span><s>{{this.Price}}</s></span></h4>
+              <h2><span style="color:red;">{{this.actualPrice}}</span></h2>
+              {{/ifCond}}
+
+              {{!-- <h4 class="product-price"><span>{{this.Price}}</span></h4> --}}
+              
+             
+              
+              
+            </div> 
+          </div>
+          </div>
+        {{/each}}
+      {{!-- </div> --}}
+   
+  </div>
+   </div> 
+</section> --}}
+
+<div class="container d-flex justify-content-center">
+<div class="row">
+    
+     {{#each products}}
+    
+    
+    <div class="col-md-3"> 
+       
+         <div class="product-wrapper mb-45 text-center"> 
+            <div class="product-img">
+                
+                    {{#with products.images.[0]}}
+                    <img id="catImg" src="/uploads/{{this.fileName}}"alt="">
+                    {{/with}}
+                    {{#if this.products.offers}} 
+                        <div class="ribbon-2"><i class="text-light me-3 ms-3">{{this.offers}}% Off</i></div>
+                      {{/if}}
+                    
+                <div class="product-links">
+                    <a><i class="fa-regular fa-trash-can me-3"></i></a>
+                </div>
+            
+               
+            </div>
+            <div class="product-content">
+                <div class="price text-danger fs-2">{{this.products.Price}}</div>
+                <div class="price"><s>{{this.products.Price}}</s></div>
+                <div class="price">{{this.products.actualprice}}</div>
+                <h3 class="title"><a href="#">{{this.products.Name}}</a></h3>
+                <ul class="rating">
+                    <li><a href="/add-to-cart/{{this.products._id}}"><i class="fas fa-shopping-cart me-3"></i></a><span><a href="/product-details/{{this.products._id}}"><i class="fa fa-eye me-3"></i></a></li></span>
+                    
+                    {{!-- href="/delete-from-wishlist/{{this.products._id}}" --}}
+                </ul>
+            </div>
+        </div>
+        
+    </div>
+   
+    {{/each}}
+</div>
+</div> 
+
+
+
+{{!-- wishlist --}}
+
+
+
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<div class="container">
+<div class="row">
+    
+     {{#each products}}
+    
+    
+    <div class="col-md-2 col-sm-6">
+       
+        <div class="product-grid">
+            <div class="product-image">
+                <a href="#" class="image">
+                   
+                </a>
+                <div class="product-links">
+                    <a onclick="removeProduct('{{this.products._id}}')"><i class="fa-regular fa-trash-can me-3"></i></a>
+                </div>
+            
+               
+            </div>
+            <div class="product-content">
+                <div class="price text-danger fs-2">{{this.products.Price}}</div>
+                <div class="price"><s>{{this.products.Price}}</s></div>
+                <div class="price">{{this.products.actualprice}}</div>
+                <h3 class="title"><a href="#">{{this.products.Name}}</a></h3>
+                <ul class="rating">
+                    <li><a href="/add-to-cart/{{this.products._id}}"><i class="fas fa-shopping-cart me-3"></i></a><span><a href="/product-details/{{this.products._id}}"><i class="fa fa-eye me-3"></i></a></li></span>
+                    
+                    {{!-- href="/delete-from-wishlist/{{this.products._id}}" --}}
+                </ul>
+            </div>
+        </div>
+        
+    </div>
+   
+    {{/each}}
+</div>
+</div>   
+<style>
+.product-grid{
+    
+    text-align: center;
+}
+.product-grid .product-image{
+    overflow: hidden;
+    position: relative;
+}
+ .product-image a.image{ display: block; }
+.product-grid .product-image img{
+    width: 100%;
+    height: auto;
+    transition: all 0.5s ease 0s;
+}
+.product-grid:hover .product-image img{ transform: scale(1.1); }
+.product-grid .product-links{
+    background-color: white;
+    width: 100px;
+    
+    margin: 0;
+    list-style: none;
+    border-radius: 30px;
+    box-shadow: 1px 0 30px rgba(0, 0, 0, 0.3);
+    opacity: 0;
+    transform: translateX(-50%) translateY(-150%);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transition: all .35s ease;
+}
+.product-grid:hover .product-links{
+    opacity: 1;
+    transform: translateX(-50%) translateY(-50%);
+}
+.product-grid .product-links li{
+    width: 48%;
+    margin: 10px 0;
+    display: inline-block;
+}
+.product-grid .product-links li a{
+    color: #788090;
+    font-size: 18px;
+    transition: all .3s;
+}
+.product-grid .product-links li a:hover{
+    color: #341f97;
+    text-shadow: 4px 4px 0 rgba(0,0,0,0.2);
+}
+.product-grid .product-content{ padding: 15px; }
+.product-grid .price{
+    color: #333;
+    font-size: 15px;
+    font-weight: 500;
+    margin: 0 0 10px;
+}
+.product-grid .price span{
+    color: #999;
+    font-weight: 400;
+    margin: 0 0 0 5px;
+    text-decoration: line-through;
+}
+.product-grid .title{
+    font-size: 15px;
+    font-weight: 500;
+    text-transform: capitalize;
+    margin: 0 0 12px;
+}
+.product-grid .title a{
+    color: #333;
+    transition: all 0.3s ease 0s;
+}
+.product-grid .title a:hover{
+    color: #341f97;
+    text-decoration: underline;
+}
+.product-grid .rating{
+    color: #fbb230;
+    font-size: 13px;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+.product-grid .rating li.far{ color: #999; }
+@media screen and (max-width: 990px){
+    .product-grid{ margin-bottom: 30px; }
+}
+</style>
+
+<script>
+   function removeProduct(proId)
+   {
+     Swal.fire({
+      title: 'Are you sure?',
+      text: "Delete item from Wishlist",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+}).then((result) => {
+  if (result.isConfirmed) {
+     $.ajax({
+            url:'/delete-from-wishlist/'+proId,
+            method:'get',
+            success:(response)=>{
+              Swal.fire(
+                'Deleted!',
+                'Your file has been deleted.',
+                'success',
+              )
+              location.reload()
+            }
+        })
+    
+    }
+})
+}
+</script>

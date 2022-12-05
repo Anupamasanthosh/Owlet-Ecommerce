@@ -1,0 +1,564 @@
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<div
+  id="carouselExampleCaptions"
+  class="carousel slide"
+  data-bs-ride="carousel"
+>
+  <div class="carousel-indicators">
+    <button
+      type="button"
+      data-bs-target="#carouselExampleCaptions"
+      data-bs-slide-to="0"
+      class="active"
+      aria-current="true"
+      aria-label="Slide 1"
+    ></button>
+    <button
+      type="button"
+      data-bs-target="#carouselExampleCaptions"
+      data-bs-slide-to="1"
+      aria-label="Slide 2"
+    ></button>
+    <button
+      type="button"
+      data-bs-target="#carouselExampleCaptions"
+      data-bs-slide-to="2"
+      aria-label="Slide 3"
+    ></button>
+  </div>
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img
+        src="/images/slide-04.jpg"
+        class="d-block w-100"
+        alt="..."
+      />
+      <div class="carousel-caption d-none d-md-block">
+        <h5>Explore More In Women</h5>
+        <p>Get New Fashion Expriences</p>
+      </div>
+    </div>
+    
+    <div class="carousel-item">
+      <img
+        src="/images/slide-06.jpg"
+        class="d-block w-100"
+        alt="..."
+      />
+      <div class="carousel-caption d-none d-md-block">
+        <h5>Experience More In Men</h5>
+        <p>Get new Fashion Expriences.</p>
+      </div>
+    </div>
+  </div>
+  <button
+    class="carousel-control-prev"
+    type="button"
+    data-bs-target="#carouselExampleCaptions"
+    data-bs-slide="prev"
+  >
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button
+    class="carousel-control-next"
+    type="button"
+    data-bs-target="#carouselExampleCaptions"
+    data-bs-slide="next"
+  >
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
+
+<div class="row">
+   
+    <div class="col-12">
+      <section class="wrapper">
+        <div class="container">
+          <div class="row">
+            <div class="col text-center mt-5">
+              <h1 class="display-4 me-5">Shop By Category<span class="ms-3"><i class="fa-sharp fa-solid fa-champagne-glasses"></i></span></h1>
+              <p class="lead"> Discover the latest trends from Owlet
+              </p>
+            </div>
+          </div>
+        
+          <div class="row">
+            {{#each category}}
+              
+            <div class="col col-md-4 mt-5">
+      <div class="card h-50"><a style="text-decoration: none; color:black" href="/category-view/{{this.Name}}">
+     
+              <img class="card-img-top"src="/uploads/{{this.images}}">
+              {{#if this.offer}} 
+                        <div class="ribbon ribbon-top-right"><span>{{this.offer}}%Off</span></div>
+                      {{/if}}
+        
+          <div class="card-body">
+            <h5 class="card-title">{{this.Name}}</h5></a>
+              <p class="card-text">
+                {{this.Description}}
+              </p>
+          </div>
+        <div class="card-footer">
+          <small class="text-muted"></small>
+        </div>
+    </div>
+ 
+  
+
+</div>
+            {{/each}}
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+  
+</div>
+<div class="row">
+<section style="background-color: rgb(255, 255, 255);">
+  <div class="container py-5 mt-2">
+    <h1 class="text-center "><strong>Our Products</strong></h1>
+     <p class="lead text-center">Top Picks for u
+              </p>
+  </div>
+</section>
+</div>
+
+    
+
+
+<section>
+   
+   
+    <div class="container d-flex justify-content-center">
+        <div class="row">
+            {{#each product}}
+            <div class="col-md-3"> 
+                <div class="product-wrapper mb-45 text-center"> 
+                    <div class="product-img">
+                        
+                        {{#with images.[0]}}
+                            <img id="catImg" src="/uploads/{{this.fileName}}" alt=""> 
+                        {{/with}}
+                       {{#if this.offers}} 
+                        <div class="ribbon-2"><i class="text-light me-3 ms-3">{{this.offers}}% Off</i></div>
+                      {{/if}}
+                        <span class="text-center">
+                          {{#if_eq this.offers}}
+                          <i class="fa fa-rupee me-1"></i><s>{{this.Price}}</s>
+                          <i class="text-danger">{{this.actualPrice}}</i>
+                          {{else}}
+                          <i class="fa fa-rupee me-1"></i>{{this.Price}}
+                          {{/if_eq}}
+                         
+                        </span> 
+                        <div class="product-action"> 
+                            <div class="product-action-style"> 
+                                <a href="/product-details/{{this._id}}"> 
+                                    <i class="fa-regular fa-eye"></i>
+                                </a> 
+                                <a onclick="addtoWish('{{this._id}}')"> 
+                                    <i class="fa fa-heart"></i> 
+                                </a> 
+                                <a onclick="addToCart('{{this._id}}')" > 
+                                    <i class="fa fa-shopping-cart"></i> 
+                                </a> 
+                            </div> 
+                        </div> 
+                    </div> 
+                </div>
+            </div>
+            {{/each}} 
+           
+        </div>	
+    </div>
+</section>
+<section>
+  <div class="container mt-5 mb-5">
+  <div class="row">
+    <h1 class="text-center "><strong>Most Loved Brands</strong></h1>
+     
+  </div>
+  </div>
+  <div class="row">
+    	<div class="brands-slider-col mt-5">
+					<div id="brand-discount-slider">
+						<div class="brand-arrow-next">
+							&#10095;
+						</div>
+						<div class="brand-arrow-prev">
+							&#10094;
+						</div>
+						<ul>
+              {{#each brand}}
+							<li>
+                
+                <div class="brand-logo-container">
+								<a href="/brand-view/{{this.Name}}"><img class="img" src="/uploads/{{this.Imgaes}}"></a>
+                </div>
+							</li>
+							
+							{{/each}}
+              
+							
+						</ul>
+					</div>
+				</div>
+  </div>
+</section>
+ <style>
+.img{
+    object-fit:contain;
+    position:relative;
+  }
+  
+.brand-logo-container {
+   width: 143px;
+    height: 92px;
+    background: #fff;
+    margin: 0 auto;
+ 
+}
+
+.ribbon-2 {
+  --f: 10px; /* control the folded part*/
+  --r: 15px; /* control the ribbon shape */
+  --t: 10px; /* the top offset */
+  
+  position: absolute;
+  inset: var(--t) calc(-1*var(--f)) auto auto;
+  padding: 0 10px var(--f) calc(10px + var(--r));
+  clip-path: 
+    polygon(0 0,100% 0,100% calc(100% - var(--f)),calc(100% - var(--f)) 100%,
+      calc(100% - var(--f)) calc(100% - var(--f)),0 calc(100% - var(--f)),
+      var(--r) calc(50% - var(--f)/2));
+  background: #ff0000;
+  box-shadow: 0 calc(-1*var(--f)) 0 inset #0005;
+}
+.ribbon {
+  width: 150px;
+  height: 150px;
+  overflow: hidden;
+  position: absolute;
+}
+.ribbon::before,
+.ribbon::after {
+  position: absolute;
+  z-index: -1;
+  content: '';
+  display: block;
+  border: 5px solid #ff0000;
+}
+.ribbon span {
+  position: absolute;
+  display: block;
+  width: 225px;
+  padding: 15px 0;
+  background-color: #ff0000;
+  box-shadow: 0 5px 10px rgba(0,0,0,.1);
+  color: #fff;
+  font: 700 18px/1 'Lato', sans-serif;
+  text-shadow: 0 1px 1px rgba(0,0,0,.2);
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.ribbon-top-right {
+  top: -10px;
+  right: -10px;
+}
+.ribbon-top-right::before,
+.ribbon-top-right::after {
+  border-top-color: transparent;
+  border-right-color: transparent;
+}
+.ribbon-top-right::before {
+  top: 0;
+  left: 0;
+}
+.ribbon-top-right::after {
+  bottom: 0;
+  right: 0;
+}
+.ribbon-top-right span {
+  left: -25px;
+  top: 30px;
+  transform: rotate(45deg);
+}
+.brands-slider-col{
+	height: 200px;
+    width: 100%;
+    float: none
+}
+#brand-discount-slider {
+position: relative;
+    overflow: hidden;
+    width: 100% !important;
+    height: 200px !important;
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+    padding: 0px 0px;
+}
+#brand-discount-slider ul {
+	position: relative;
+	margin: 0 !important;
+padding: 0 60px !important;
+    height: 100% !important;
+	list-style: none;
+  display: flex;
+  width:100% !important;
+}
+#brand-discount-slider ul li {
+position: relative;
+    display: block;
+    float: left;
+    margin: 20px;
+    padding: 0;
+    width: 100%;
+    border: 1px solid #ccc;
+    text-align: center;
+}
+#brand-discount-slider ul li img {
+width: 100%;
+}
+.brand-arrow-prev {
+	width: 50px;
+    height: 81%;
+    background: #000;
+    text-align: center;
+    line-height: 177px;
+    color: #fff;
+    position: absolute;
+    top: 0px;
+    left: 0;
+    z-index: 25;
+    cursor: pointer;
+    margin: 20px 0px;
+}
+.brand-arrow-next {
+	  width: 50px;
+   height: 81%;
+    background: #000;
+    text-align: center;
+    line-height: 177px;
+    color: #fff;
+    position: absolute;
+    top: 0px;
+    right: 0;
+    z-index: 25;
+    cursor: pointer;
+   margin: 20px 0px;
+}
+
+.brand-arrow-next:hover, .brand-arrow-prev:hover {
+  color:#d58e35;
+}
+
+ </style>
+<script>
+  $(document).ready(function (brandSlider) {
+
+	var slideCount = $('#brand-discount-slider ul li').length;
+	var slideWidth = $('#brand-discount-slider ul li').width();
+	var slideHeight = $('#brand-discount-slider ul li').height();
+	var sliderUlWidth = slideCount * slideWidth;
+
+	$('#brand-discount-slider').css({ width: slideWidth, height: slideHeight });
+
+	$('#brand-discount-slider ul').css({ width: sliderUlWidth, marginLeft: - slideWidth });
+
+    $('#brand-discount-slider ul li:last-child').prependTo('#brand-discount-slider ul');
+
+
+    function moveLeft() {
+        $('#brand-discount-slider ul').animate({
+            left: + slideWidth
+        }, 200, function () {
+            $('#brand-discount-slider ul li:last-child').prependTo('#brand-discount-slider ul');
+            $('#brand-discount-slider ul').css('left', '');
+        });
+    };
+
+    function moveRight() {
+        $('#brand-discount-slider ul').animate({
+            left: - slideWidth
+        }, 200, function () {
+            $('#brand-discount-slider ul li:first-child').appendTo('#brand-discount-slider ul');
+            $('#brand-discount-slider ul').css('left', '');
+        });
+    };
+
+
+    $('.brand-arrow-prev').click(function () {
+        moveLeft();
+    });
+
+    $('.brand-arrow-next').click(function () {
+        moveRight();
+    });
+    
+
+     setTimeout(moveLeft(), 1000); /* works only on load for the first slider...research later*/
+});
+
+  function addToCart(proId)
+  {
+      $.ajax({
+       url:'/add-to-cart/'+proId,
+      method:'get',
+      success:(response)=>
+      {
+        
+        Swal.fire({
+         position: 'top-end',
+        icon: 'success',
+        title: 'Product added to cart',
+        showConfirmButton: false,
+        timer: 1500
+        })
+        
+        if(response.status)
+        {
+          let count=$('#cart-count').html()
+          count=parseInt(count)+1
+          $("#cart-count").html(count)
+        }
+        location.reload()
+       
+      }
+    })
+  }
+  function addtoWish(proId)
+  {
+    $.ajax({
+      url:'/wishlist/'+proId,
+      method:'get',
+      success:(response)=>
+      {
+        Swal.fire({
+        position: 'bottom-end',
+        icon: 'Success',
+        title:'Product added to Wishlist',
+        showConfirmButton: false,
+        timer: 1500
+        })
+       
+      }
+    })
+  }
+ 
+ </script>
+
+
+
+<style>
+   .product-grid{
+   
+    text-align: center;
+}
+
+#catImg{
+    height: 400px;
+    object-fit:contain;
+    
+    
+}
+.product-grid .product-image{
+    overflow: hidden;
+    position: relative;
+   
+   
+}
+.product-grid .product-image a.image{ display: block; }
+.product-grid .product-image img{
+    width: 100%;
+   
+    transition: all 0.5s ease 0s;
+}
+.product-grid:hover .product-image img{ transform: scale(1.1); }
+.product-grid .product-links{
+    background: #fff;
+    width: 150px;
+    height: 150px;
+    padding: 10px 20px;
+    margin: 0;
+    list-style: none;
+    border-radius: 30px;
+    box-shadow: 1px 0 30px rgba(0, 0, 0, 0.3);
+    opacity: 0;
+    transform: translateX(-50%) translateY(-150%);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transition: all .35s ease;
+}
+.product-grid:hover .product-links{
+    opacity: 1;
+    transform: translateX(-50%) translateY(-50%);
+}
+.product-grid .product-links li{
+    width: 48%;
+    height: 50%;
+    margin: 10px 0;
+    display: inline-block;
+}
+.product-grid .product-links li a{
+    color: #788090;
+    font-size: 18px;
+    transition: all .3s;
+}
+.product-grid .product-links li a:hover{
+    color: #341f97;
+    text-shadow: 4px 4px 0 rgba(0,0,0,0.2);
+}
+.product-grid .product-content{ padding: 15px; }
+.product-grid .price{
+    color: #333;
+    font-size: 15px;
+    font-weight: 500;
+    margin: 0 0 10px;
+}
+.product-grid .price span{
+    color: #999;
+    font-weight: 400;
+    margin: 0 0 0 5px;
+    text-decoration: line-through;
+}
+.product-grid .title{
+    font-size: 15px;
+    font-weight: 500;
+    text-transform: capitalize;
+    margin: 0 0 12px;
+}
+.product-grid .title a{
+    color: #333;
+    transition: all 0.3s ease 0s;
+}
+.product-grid .title a:hover{
+    color: #341f97;
+    text-decoration: underline;
+}
+.product-grid .rating{
+    color: #fbb230;
+    font-size: 13px;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+.product-grid .rating li.far{ color: #999; }
+@media screen and (max-width: 990px){
+    .product-grid{ margin-bottom: 30px; }
+}
+
+
+.mt-100{margin-top:100px}.product-wrapper, .product-img{overflow: hidden;position: relative}.mb-45{margin-bottom: 45px}.product-action{bottom: 0px;left: 0;opacity: 0;position: absolute;right: 0;text-align: center;transition: all 0.6s ease 0s}.product-wrapper{border-radius: 10px}.product-img >span{background-color: #fff;box-shadow: 0 0 8px 1.7px rgba(0, 0, 0, 0.06);color: #333;display: inline-block;font-size: 12px;font-weight: 500;left: 20px;letter-spacing: 1px;padding: 3px 12px;position: absolute;text-align: center;text-transform: uppercase;top: 20px}.product-action-style{background-color: #fff;box-shadow: 0 0 8px 1.7px rgba(0, 0, 0, 0.06);display: inline-block;padding: 16px 2px 12px}.product-action-style >a{color: #979797;line-height: 1;padding: 0 21px;position: relative}.product-action-style >a.action-plus{font-size: 18px}.product-wrapper:hover .product-action{bottom: 20px;opacity: 1}
+
+
+
+</style>
+
+
+

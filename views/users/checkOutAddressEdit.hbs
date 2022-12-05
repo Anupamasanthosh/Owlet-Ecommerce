@@ -1,0 +1,114 @@
+<div class="container">
+<form action="/editcheckOutAddress/{{AddressDetails.id}}" method="post">
+<div class="card-body">
+  <div class="row">
+    <div class="col-md-6 mt-4">
+      <div class="md-form mb-0">
+        <input
+          type="text"
+          id="name"
+          name="name"
+          class="form-control"
+          value="{{users.name}}"
+        />
+        <label for="name" class="">Name</label>
+      </div>
+    </div>
+    <div class="col-md-6 mt-4">
+      <div class="md-form mb-0">
+        <input
+          type="text"
+          id="phone"
+          name="phone"
+          class="form-control"
+          value="{{users.phone}}"
+        />
+        <label for="phone" class="">Phone</label>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6 mt-4">
+      <div class="md-form mb-0">
+        <input
+          type="text"
+          id="pincode"
+          name="pincode"
+          class="form-control"
+          value="{{AddressDetails.Pincode}}"
+        />
+        <label for="pincode" class="">Pincode</label>
+      </div>
+    </div>
+    <div class="col-md-6 mt-4">
+      <div class="md-form mb-0">
+        <input
+          type="text"
+          id="state"
+          name="state"
+          class="form-control"
+          value="{{AddressDetails.State}}"
+        />
+        <label for="state" class="">State</label>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="md-form mb-0 mt-4">
+      <input
+        type="text"
+        id="address"
+        name="address"
+        class="form-control"
+        value="{{AddressDetails.Address}}"
+      />
+      <label for="address" class="">Address</label>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6 mt-4">
+      <div class="md-form mb-0">
+        <input
+          type="text"
+          id="locality"
+          name="locality"
+          class="form-control"
+          value="{{AddressDetails.Locality}}"
+        />
+        <label for="locality" class="">Locality</label>
+      </div>
+    </div>
+    <div class="col-md-6 mt-4">
+      <div class="md-form mb-0">
+        <input
+          type="text"
+          id="city"
+          name="city"
+          class="form-control"
+          value="{{AddressDetails.City}}"
+        />
+        <label for="city" class="">City/District</label>
+      </div>
+    </div>
+    <div class="col-md-6 mt-4">
+      <div class="md-form mb-0">
+        <input
+          type="text"
+          id="id"
+          hidden
+          name="id"
+          class="form-control"
+          value="{{AddressDetails.id}}"
+        />
+
+      </div>
+    </div>
+  </div><hr />
+</div>
+ <div class="card-header py-3 text-center">
+            
+              <button type="submit" class="btn btn-outline-dark">Save</button>
+  </div>
+</form>
+
+</div>

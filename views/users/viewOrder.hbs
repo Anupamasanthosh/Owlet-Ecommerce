@@ -1,0 +1,368 @@
+
+
+  <div class="row ms-5">
+    
+      <div class="col">
+        <nav aria-label="breadcrumb" class="rounded-3 p-3 mb-4">
+          <ol class="breadcrumb mb-0">
+            <li class="breadcrumb-item"><a href="/users">Home</a></li>
+            <li class="breadcrumb-item"><a href="/view-order">My Orders</a></li>
+            <li class="breadcrumb-item"><a href="/viewOrderDetails">Order Details</a></li>
+          </ol>
+        </nav>
+      </div>
+  </div> 
+
+
+<div class="row d-flex">
+    <div class="col-md-6 mb-5">
+        <div class="card ms-5 me-5 mb-5" style="border-radius: 10px;">
+            <div class="card-header">
+			    <div class="d-inline h4 px-2 py-2 mt-3 mb-3">Product Details</div>
+							
+            </div>
+            <div class="cart-table px-4 py-4">
+                {{#each orderDetails.products}}
+                    <div class="row cart-row container">
+                        <div class="col-xs-12 col-md-4">
+                            {{#with product.images.[0]}}
+                                <img class="mt-3" src="/uploads/{{this.fileName}}" width="100% " height="100%">
+                            {{/with}}
+                        </div>
+                        <div class="col-md-6">
+                            <div class="product-article"></div>
+                            <div class="product-name fs-5 mt-4">{{this.product.Name}}</div>
+                            <div class="product-options fs-6 mt-2">{{this.product.Description}}</div>
+                            <div class="product-qua mt-5">
+                                <input id="Qua" type="text" class="Qua fs-6" value="{{this.quantity}}" size="1" class="form-control">
+                             </div>
+                            <div class="product-price fs-5 ms-5 mt-5">Price:{{this.product.actualPrice}}</div>
+                           
+                        </div>
+                    </div>
+                {{/each}}
+            </div>
+        </div>
+    </div>
+    <div class="col md-6">
+        <div class="container">
+            <div class="card">
+                
+				<div class="card-header">
+					<div class="d-inline h4 px-2 py-2 mt-3 mb-3">Order Details</div>
+							
+				</div>
+				<div class="card-body px-4 py-4">
+                    
+					<dl class="row">
+								<dd class="col-sm-4">Order Id</dd>
+								<dt class="col-sm-8">{{orderDetails._id}}</dt>
+								<dd class="col-sm-4">Deliver To</dd>
+								<dt class="col-sm-8">{{orderDetails.address}}</dt>
+					</dl>
+					<dl class="row">
+								<dd class="col-sm-4">Total</dd>
+                               
+								<dt class="col-sm-8">{{orderDetails.totalAmount}}</dt>
+                               
+								<dd class="col-sm-4">Order Status</dd>
+								<dt class="col-sm-8">{{orderDetails.status}}</dt>
+					</dl>
+					<dl class="row">
+								<dd class="col-sm-4">Date of Order</dd>
+								<dt class="col-sm-8">{{orderDetails.date}}</dt>
+								<dd class="col-sm-4">Offer Applied If any</dd>
+								<dt class="col-sm-8">{{orderDetails.offers}}</dt>
+                                <dd class="col-sm-4">Total</dd>
+                                <dt class="col-sm-8">{{orderDetails.totalAmount}}</dt>
+				    </dl>
+					<hr>
+					<a href="#TrackOrder">Track Your Order</a>
+                </div>
+			</div>
+            {{#ifCond2 orderDetails.status 'Deliverd'}}
+            
+            
+			<div class="card mt-5">
+				<div class="card-body px-4 py-4">
+                    {{#if (eq orderDetails.reasonApproved true)}}
+                    <div class="mb-5">Return Accepted</div>
+                    {{else if (eq orderDetails.reasonApproved false)}}
+                    <div class="mb-5">Return Rejected</div>
+                     
+                     
+                     {{else}}
+                     {{#if_eq orderDetails.Reason}}
+                     <div class="mb-5">Return Processing</div>
+                     {{else}}
+
+                    <div class="mb-5">Return Your Order</div>
+                        <button type="button" class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                        Return
+                    </button>
+                    
+                    {{/if_eq}}
+                    {{/if}}
+                   {{/ifCond2}}
+					
+                    
+					<hr>
+					
+                    
+                   
+					<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Return Order</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+	                            <form action="/return" method="POST">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="md-form mb-0">
+                                                <input type="text" id="code" name="code" class="form-control" >
+                                                <label for="code" class="">Reason For returning this Order</label>
+                                                <input type="text" id="OrderId" name="OrderID" class="form-control" value="{{orderDetails._id}}" hidden>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal">Close</button>
+                                        <button type="submit" class="btn btn-outline-dark">Save</button>
+                                    </div>
+                                </form>
+                            </div>
+	                    </div>
+                    </div>
+				</div>
+			</div>
+            
+           
+		</div>
+	</div>
+</div>
+
+
+{{!-- order status --}}
+<div class="container" id="TrackOrder">
+	{{#ifCond2 orderDetails.status 'Placed'}}
+<ol class="progtrckr" data-progtrckr-steps="5">
+    <li class="progtrckr-done">Order Placed</li><!--
+ --><li class="progtrckr-todo">Shipped</li><!--
+ --><li class="progtrckr-todo">Out for Delivery</li><!--
+ --><li class="progtrckr-todo">Deliverd</li>
+
+</ol>
+{{/ifCond2}}
+{{#ifCond2 orderDetails.status 'Shipped'}}
+<ol class="progtrckr" data-progtrckr-steps="5">
+    <li class="progtrckr-done">Order Placed</li>
+	<li class="progtrckr-done">Shipped</li><!--
+ --><li class="progtrckr-todo">Out for Delivery</li><!--
+ --><li class="progtrckr-todo">Deliverd</li>
+
+</ol>
+{{/ifCond2}}
+{{#ifCond2 orderDetails.status 'Out for delivery'}}
+<ol class="progtrckr" data-progtrckr-steps="5">
+    <li class="progtrckr-done">Order Placed</li><!--
+ --><li class="progtrckr-done">Shipped</li><!--
+ --><li class="progtrckr-done">Out for Delivery</li><!--
+ --><li class="progtrckr-todo">Deliverd</li>
+
+</ol>
+{{/ifCond2}}
+{{#ifCond2 orderDetails.status 'Deliverd'}}
+<ol class="progtrckr" data-progtrckr-steps="5">
+    <li class="progtrckr-done">Order Placed</li><!--
+ --><li class="progtrckr-done">Shipped</li><!--
+ --><li class="progtrckr-done">Out for Delivery</li><!--
+ --><li class="progtrckr-done">Deliverd</li>
+
+</ol>
+{{/ifCond2}}
+{{#ifCond2 orderDetails.status 'canceled by user'}}
+<ol class="progtrckr" data-progtrckr-steps="5">
+    <li class="progtrckr-done">Order Placed</li>
+
+ 
+ 	<li class="progtrckr-done">Canceled</li>
+
+</ol>
+{{/ifCond2}}
+{{#ifCond2 orderDetails.status 'Canceled by Admin'}}
+<ol class="progtrckr" data-progtrckr-steps="5">
+    <li class="progtrckr-done">Order Placed</li>
+
+ 
+ 	<li class="progtrckr-done">Canceled</li>
+
+</ol>
+{{/ifCond2}}
+
+
+
+</div>
+
+
+
+
+<style>
+	ol.progtrckr {
+    margin: 0;
+    padding: 0;
+    list-style-type none;
+}
+
+ol.progtrckr li {
+    display: inline-block;
+    text-align: center;
+    line-height: 3.5em;
+}
+
+ol.progtrckr[data-progtrckr-steps="2"] li { width: 49%; }
+ol.progtrckr[data-progtrckr-steps="3"] li { width: 33%; }
+ol.progtrckr[data-progtrckr-steps="4"] li { width: 24%; }
+ol.progtrckr[data-progtrckr-steps="5"] li { width: 19%; }
+ol.progtrckr[data-progtrckr-steps="6"] li { width: 16%; }
+ol.progtrckr[data-progtrckr-steps="7"] li { width: 14%; }
+ol.progtrckr[data-progtrckr-steps="8"] li { width: 12%; }
+ol.progtrckr[data-progtrckr-steps="9"] li { width: 11%; }
+
+ol.progtrckr li.progtrckr-done {
+    color: black;
+    border-bottom: 4px solid yellowgreen;
+}
+ol.progtrckr li.progtrckr-todo {
+    color: silver; 
+    border-bottom: 4px solid silver;
+}
+
+ol.progtrckr li:after {
+    content: "\00a0\00a0";
+}
+ol.progtrckr li:before {
+    position: relative;
+    bottom: -2.5em;
+    float: left;
+    left: 50%;
+    line-height: 1em;
+}
+ol.progtrckr li.progtrckr-done:before {
+    content: "\2713";
+    color: white;
+    background-color: yellowgreen;
+    height: 2.2em;
+    width: 2.2em;
+    line-height: 2.2em;
+    border: none;
+    border-radius: 2.2em;
+}
+ol.progtrckr li.progtrckr-todo:before {
+    content: "\039F";
+    color: silver;
+    background-color: white;
+    font-size: 2.2em;
+    bottom: -1.2em;
+}
+
+</style>
+ 
+
+<style>
+    
+.cart-row:nth-child(even){background:#ffffff}
+.product-name{font-size:16px;font-weight:600}
+.product-options{font-size:12px;margin-bottom:5px}
+.product-options span{color:rgb(255, 255, 255);font-weight:400;text-transform:uppercase}
+.product-articlenr{color:rgb(255, 255, 255);font-weight:400;text-transform:uppercase}
+.product-price small{color:rgb(255, 253, 253);font-weight:300;font-size:20px;margin:0;padding:0;line-height:initial}
+.cart-table .cart-row input{width:30px;height:auto;padding:2px;border-radius:0;border-color:#000;float:left;font-size:14px;text-align:center}
+.cart-table .cart-row button.update{border:0;padding:7px 8px;background:#000;color:#fff;font-size:9px;float:left;margin-right:5px}
+.cart-table .cart-row button.delete{background-color:#ffffff;color:#000!important;padding:7px 13px;font-size:13px;border:0;border-radius:50px}
+.product-price-total{font-size:16px;font-weight:400;width:80%;float:left}
+.cart-actions{display:flex;justify-content:center;align-items:center}
+.cart-special-holder{background:#efefef}
+.cart-special{padding:1em 1em 0;display:block;margin-top:.5em;border-top:1px solid #dadada}
+.cart-special .cart-special-content:before{content:"\21b3";font-size:1.5em;margin-right:1em;color:#6f6f6f;}
+
+{{!-- 
+.hh-grayBox {
+	background-color: #F8F8F8;
+	margin-bottom: 20px;
+	padding: 35px;
+  margin-top: 20px;
+}
+.pt45{padding-top:45px;}
+.order-tracking{
+	text-align: center;
+	width: 33.33%;
+	position: relative;
+	display: block;
+}
+.order-tracking .is-complete{
+	display: block;
+	position: relative;
+	border-radius: 50%;
+	height: 30px;
+	width: 30px;
+	border: 0px solid #AFAFAF;
+	background-color: #f7be16;
+	margin: 0 auto;
+	transition: background 0.25s linear;
+	-webkit-transition: background 0.25s linear;
+	z-index: 2;
+}
+.order-tracking .is-complete:after {
+	display: block;
+	position: absolute;
+	content: '';
+	height: 14px;
+	width: 7px;
+	top: -2px;
+	bottom: 0;
+	left: 5px;
+	margin: auto 0;
+	border: 0px solid #AFAFAF;
+	border-width: 0px 2px 2px 0;
+	transform: rotate(45deg);
+	opacity: 0;
+}
+.order-tracking.completed .is-complete{
+	border-color: #27aa80;
+	border-width: 0px;
+	background-color: #27aa80;
+}
+.order-tracking.completed .is-complete:after {
+	border-color: #fff;
+	border-width: 0px 3px 3px 0;
+	width: 7px;
+	left: 11px;
+	opacity: 1;
+}
+.order-tracking p {
+	color: #A4A4A4;
+	font-size: 16px;
+	margin-top: 8px;
+	margin-bottom: 0;
+	line-height: 20px;
+}
+.order-tracking p span{font-size: 14px;}
+.order-tracking.completed p{color: #000;}
+.order-tracking::before {
+	content: '';
+	display: block;
+	height: 3px;
+	width: calc(100% - 40px);
+	background-color: #f7be16;
+	top: 13px;
+	position: absolute;
+	left: calc(-50% + 20px);
+	z-index: 0;
+}
+.order-tracking:first-child:before{display: none;}
+.order-tracking.completed:before{background-color: #27aa80;} --}}
+
+</style>

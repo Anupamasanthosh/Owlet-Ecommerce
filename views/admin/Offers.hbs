@@ -1,0 +1,269 @@
+
+
+<link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap5.min.css">
+<script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+
+<div class="container me-5 mt-5">
+  <div class="row ">
+      <div class="col">
+        <nav aria-label="breadcrumb" class="bg-light rounded-3 p-3 mb-4">
+          <ol class="breadcrumb mb-0">
+            <li class="breadcrumb-item"><a href="/admin/adminDash">Home</a></li>
+            <li class="breadcrumb-item"><a href="/admin/Offers">Offer Management</a></li>
+            
+          </ol>
+        </nav>
+      </div>
+  </div> 
+  
+<div class="row">
+  <h3 class="text-center">
+    Available Product and Category Offers
+  </h3>
+  
+</div>
+<div class="row">
+ <h5 class="text mb-5 mt-5">
+    Available Product Offers </h5> 
+ 
+  <div class="table-responsive">
+  <table class="table table-secondary" id="myTable1">
+  <thead>
+    
+    <tr>
+      
+      <th scope="col">Product Name</th>
+      <th scope="col">Category</th>
+      
+      <th scope="col">Discount</th>
+      
+      <th scope="col">Edit</th>
+      <th scope="col">Delete</th>
+    </tr>
+    
+  </thead>
+  <tbody>
+    {{#each products}}
+   
+    <tr>
+       
+      <td>{{this.Name}}</td>
+      <td>{{this.Category}}</td>
+      <td>{{this.offers}}</td>
+      {{#ifCond  this.offers ""}}
+      <td><a href="/admin/edit-Offer/{{this._id}}"><i class="fa-solid fa-pen-to-square ms-3" data-bs-toggle="modal" data-bs-target="#exampleModal"></i></a></td>
+      {{/ifCond}}
+      {{#ifCond2 this.offers ""}}
+     
+      <td><a href="/admin/add-Offer/{{this._id}}"><i class="fa-solid fa-plus ms-3" data-bs-toggle="modal" data-bs-target="#addOffer"></i></a></td>
+      {{/ifCond2}}
+      <td><a href="/admin/delete-Offer/{{this._id}}"><i class="fa-solid fa-trash ms-3"></i></a></td>
+     
+    </tr>
+    
+     {{/each}}
+  </tbody>
+</table>
+</div>
+</div>
+<div class="row">
+   <h5 class="text mb-5 mt-5">
+    Available Category Offers</h5> 
+  <div class="table-responsive">
+  <table class="table table-secondary" id="myTable">
+  <thead>
+    <tr>
+      
+      
+      <th scope="col">Category Name</th>
+      <th scope="col">Discount</th>
+      
+      <th scope="col">Edit</th>
+      <th scope="col">Delete</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each category}}
+    <tr>
+      
+      <td>{{this.Name}}</td>
+      <td>{{this.offer}}</td>
+      {{#if_eq  this.offer}}
+      <td><a href="/admin/edit-CatOffer/{{this._id}}"><i class="fa-solid fa-pen-to-square ms-3" data-bs-toggle="modal" data-bs-target="#editCatOffer"></i></a></td>
+     
+      {{else}}
+      <td><a href="/admin/add-CatOffer/{{this._id}}"><i class="fa-solid fa-plus ms-3" data-bs-toggle="modal" data-bs-target="#addCatOffer"></i></a></td>
+      {{/if_eq}}
+      <td><a href="/admin/delete-CatOffer/{{this._id}}"><i class="fa-solid fa-trash ms-3"></i></a></td>
+      
+      
+    </tr>
+    {{/each}}
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+{{!-- edit product offer --}}
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Edit Product Offers</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form action="/admin/edit-Offer" method="POST">
+          <div class="card-body">
+            <div class="row">
+              <div class="md-form mb-0">
+                <select class="form-select" id="Product" name="Product">
+                      {{#each products}}
+                    <option value="{{this._id}}" selected>{{this.Name}}</option>
+                      {{/each}}
+                </select>
+                <label for="Catagory" class="">Name of the Product</label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="md-form mb-0">
+                <input type="number" id="productDiscount" name="productDiscount" class="form-control" value="{{products.offers}}" >
+                  <label for="productDiscount" class="">Discount on Product</label>
+              </div>
+            </div>
+            <hr>
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-outline-dark" data-bs-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-outline-dark">Save</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+{{!-- add product offer --}}
+<div class="modal fade" id="addOffer" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Edit Product Offers</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form action="/admin/add-Offer" method="POST">
+          <div class="card-body">
+            <div class="row">
+              <div class="md-form mb-0">
+                <select class="form-select" id="Product" name="Product">
+                    {{#each products}}
+                      <option value="{{this._id}}" selected>{{this.Name}}</option>
+                    {{/each}}
+                </select>
+                <label for="Catagory" class="">Name of the Product</label>
+              </div>
+            </div>
+           <div class="row">
+              <div class="md-form mb-0">
+                <input type="number" id="productDiscount" name="productDiscount" class="form-control" >
+                  <label for="productDiscount" class="">Discount on Product</label>
+              </div>
+            </div>
+            <hr>
+          </div>
+          <div class="modal-footer">
+             <button type="submit" class="btn btn-outline-dark" data-bs-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-outline-dark">Save</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{{!-- edit category offer --}}
+<div class="modal fade" id="editCatOffer" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Edit Product Offers</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form action="/admin/edit-CatOffer" method="POST">
+          <div class="card-body">
+            <div class="row">
+              <div class="md-form mb-0">
+                <select class="form-select" id="Category" name="Category">
+                  {{category}}
+                      {{#each category}}
+                    <option value="{{this._id}}" selected>{{this.Name}}</option>
+                      {{/each}}
+                </select>
+                <label for="Catagory" class="">Name of the Category</label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="md-form mb-0">
+                <input type="number" id="categoryDiscount" name="categoryDiscount" class="form-control" value="{{category.offer}}" >
+                  <label for="productDiscount" class="">Discount on category</label>
+              </div>
+            </div>
+            <hr>
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-outline-dark" data-bs-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-outline-dark">Save</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{{!-- add category offer --}}
+<div class="modal fade" id="addCatOffer" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Edit Product Offers</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form action="/admin/add-CatOffer" method="POST">
+          <div class="card-body">
+            <div class="row">
+              <div class="md-form mb-0">
+                <select class="form-select" id="Product" name="Product">
+                    {{#each category}}
+                      <option value="{{this._id}}" selected>{{this.Name}}</option>
+                    {{/each}}
+                </select>
+                <label for="Catagory" class="">Name of the Category</label>
+              </div>
+            </div>
+           <div class="row">
+              <div class="md-form mb-0">
+                <input type="number" id="CategoryDiscount" name="CategoryDiscount" class="form-control" >
+                  <label for="productDiscount" class="">Discount on Category</label>
+              </div>
+            </div>
+            <hr>
+          </div>
+          <div class="modal-footer">
+             <button type="submit" class="btn btn-outline-dark" data-bs-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-outline-dark">Save</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  $(document).ready( function () {
+    $('#myTable1').DataTable();
+} );
+ $(document).ready( function () {
+    $('#myTable').DataTable();
+} );
+</script>

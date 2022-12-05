@@ -1,0 +1,264 @@
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<section>
+    <div class="container">
+        <div class="row">
+            {{#each products}}
+    <div class="col-md-3 col-sm-6">
+        <div class="product-grid">
+            <div class="product-image" >
+                <a href="#" class="image">
+                     {{#with products.images.[0]}}
+                    <img class="pic-1" src="/uploads/{{this.fileName}}">
+                    {{/with}}
+                     {{#with products.images.[1]}}
+                    <img class="pic-2" src="/uploads/{{this.fileName}}">
+                    {{/with}}
+                    
+                </a>
+                {{!-- <a class="product-like-icon" data-tip="Add to Wishlist">
+                    <i class="fa-regular fa-trash-can"></i>
+                </a> --}}
+                <ul class="product-links">
+                    <li><a href="/product-details/{{this.products._id}}"><i class="fa fa-eye"></i></a></li>
+                    <li><a onclick="addToCart('{{this.products._id}}')"><i class="fas fa-shopping-cart"></i></a></li>
+                    <li><a onclick="deleteWish('{{this.products._id}}')"><i class="fa-solid fa-trash"></i></a></li>
+                    
+                </ul>
+            </div>
+            <div class="product-content">
+                 <h3 class="product-name ms-5">{{this.products.Name}}</h3>
+                 {{#if_eq this.products.offers}}
+                 <h5 class="product-price"><div class="text-center"><s class="text-danger">{{this.products.Price}}</s></div></h5>
+                 <h2 class="product-price"><div class="text-center text-success">{{this.products.actualPrice}}</div></h2>
+                 {{else}}
+                    <h5 class="product-price"><div class="text-center">{{this.products.Price}}</div></h5>
+                 {{/if_eq}}
+            </div>
+        </div>
+    </div>
+{{/each}}
+</div>
+    </div>
+</section>
+
+
+
+<style>
+    .product-grid{
+    background-color: #fff;
+    font-family: 'Montserrat', sans-serif;
+    text-align: center;
+}
+.product-grid .product-image{
+    overflow: hidden;
+    position: relative;
+}
+.product-grid .product-image a.image{ display: block; }
+.product-grid .product-image img{
+    width: 100%;
+    height: auto;
+}
+.product-grid .product-image .pic-1{ transition: all 0.3s ease 0s; }
+.product-grid .product-image:hover .pic-1{ transform: translateX(100%); }
+.product-grid .product-image .pic-2{
+    width: 100%;
+    height: 100%;
+    transform: translateX(-101%);
+    position: absolute;
+    top: 0;
+    left: 0;
+    transition: all 0.3s ease 0s;
+}
+.product-grid .product-image:hover .pic-2{ transform: translateX(0); }
+.product-grid .product-sale-label{
+    color: #fff;
+    background: #0a805e;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 2px 8px;
+    position: absolute;
+    top: 15px;
+    left: 15px;
+}
+.product-grid .product-like-icon{
+    color: #696969;
+    font-size: 22px;
+    line-height: 20px;
+    position: absolute;
+    top: 15px;
+    right: 15px;
+}
+.product-grid .product-like-icon:hover{ color: #0a805e; }
+.product-grid .product-like-icon:before,
+.product-grid .product-like-icon:after{
+    content: attr(data-tip);
+    color: #fff;
+    background-color: rgb(255, 255, 255);
+    font-size: 12px;
+    line-height: 18px;
+    padding: 7px 7px 5px;
+    visibility: hidden;
+    position: absolute;
+    right: 0;
+    top: 15px;
+    transition: all 0.3s ease 0s;
+}
+.product-grid .product-like-icon:after{
+    content: '';
+    height: 15px;
+    width: 15px;
+    padding: 0;
+    transform: translateX(-50%) rotate(45deg);
+    right: auto;
+    left: 50%;
+    top: 15px;
+    z-index: -1;
+}
+.product-grid .product-like-icon:hover:before,
+.product-grid .product-like-icon:hover:after{
+    visibility: visible;
+    top: 30px;
+}
+.product-grid .product-links{
+    width: 170px;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    opacity: 0;
+    transform: translateX(-50%);
+    position: absolute;
+    bottom: -50px;
+    left: 50%;
+    transition: all 0.3s ease 0s;
+}
+.product-grid:hover .product-links{
+    bottom: 40px;
+    opacity: 1;
+}
+.product-grid .product-links li{
+    display: inline-block;
+    margin: 0 2px;
+}
+.product-grid .product-links li a{
+    color: #fff;
+    background: rgb(253, 252, 252);
+    font-size: 16px;
+    line-height: 48px;
+    width: 48px;
+    height: 48px;
+    border-radius: 10px;
+    display: block;
+    transition: all 0.3s ease 0s;
+}
+.product-grid:hover .product-links li a:hover{ background: #333; }
+.product-grid .product-content{
+    text-align: left;
+    padding: 15px 0 0;
+}
+.product-grid .title{
+    font-size: 14px;
+    font-weight: 500;
+    text-transform: capitalize;
+    margin: 0 0 8px;
+}
+.product-grid .title a{
+    color: #333;
+    transition: all 0.3s ease 0s;
+}
+.product-grid .title a:hover{ color: #0a805e; }
+.product-grid .price{
+    color: #0a805e;
+    font-size: 16px;
+    font-weight: 500;
+}
+.product-grid .price span{
+    color: #555;
+    font-size: 14px;
+    font-weight: 400;
+    text-decoration: line-through;
+    margin: 0 5px 0 0;
+}
+@media screen and (max-width: 990px){
+    .product-grid{ margin: 0 0 30px; }
+}
+</style>
+<script>
+    
+   
+     function addToCart(proId)
+  {
+      $.ajax({
+      url:'/add-to-cart/'+proId,
+      method:'get',
+      success:(response)=>
+      {
+        
+        Swal.fire({
+         position: 'top-end',
+        icon: 'success',
+        title: 'Product added to cart',
+        showConfirmButton: false,
+        timer: 1500
+        })
+        
+        if(response.status)
+        {
+          let count=$('#cart-count').html()
+          count=parseInt(count)+1
+          $("#cart-count").html(count)
+        }
+        {{!-- location.reload() --}}
+       
+      }
+    })
+  }
+  function addtoWish(proId)
+  {
+    $.ajax({
+      url:'/wishlist/'+proId,
+      method:'get',
+      success:(response)=>
+      {
+        Swal.fire({
+        position: 'bottom-end',
+        icon: 'Success',
+        title:'Product added to Wishlist',
+        showConfirmButton: false,
+        timer: 1500
+        })
+       
+      }
+    })
+  }
+  function deleteWish(proId)
+  {
+   
+      Swal.fire({
+      title: 'Are you sure?',
+      text: "Delete item from cart",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+}).then((result) => {
+  if (result.isConfirmed) {
+     $.ajax({
+            url:'/delete-from-wishlist/'+proId,
+            method:'get',
+            success:(response)=>{
+              Swal.fire(
+                'Deleted!',
+                'Your file has been deleted.',
+                'success'
+              )
+              location.reload()
+            }
+            
+        })
+    }
+})
+  }
+      
+</script>

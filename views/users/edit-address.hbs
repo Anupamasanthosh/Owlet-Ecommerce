@@ -1,0 +1,181 @@
+<section style="background-color: rgb(255, 255, 255);">
+  <div class="container py-5">
+   
+
+    <div class="row">
+      {{!-- Side bar Portion Starts from here....... --}}
+      <div class="col-lg-4">
+        <div class="card mb-4">
+          <div class="card-body text-center">
+            <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp" alt="avatar"
+              class="rounded-circle img-fluid" style="width: 150px;">
+
+            <h5 class="my-3">{{users.name}}</h5>
+            <p class="text-muted mb-1">{{users.email}}</p>
+            
+            <div class="d-flex justify-content-center mb-2">
+              
+              <button type="button" class="btn btn-outline-dark mt-3 ms-1">Edit</button>
+            </div>
+          </div>
+        </div>
+        <div class="card mb-4 mb-lg-0">
+          
+          <div class="card-body p-0">
+            <ul class="list-group list-group-flush rounded-3">
+             <li class="list-group-item d-flex align-items-center p-3 me-3 ms-3">
+                <a href="#Personal"><i class="fa-solid fa-house-user me-3"></i></a>
+                <p class="mb-0">Address</p>
+              </li></a>
+             <li class="list-group-item d-flex align-items-center p-3 me-3 ms-3">
+                <a href="#Payments"><i class="fa-solid fa-dollar-sign me-3"></i></a>
+                <p class="mb-0">Payments</p>
+              </li></a>
+             <li class="list-group-item d-flex align-items-center p-3 me-3 ms-3">
+                <a href="/view-order"><i class="fa-solid fa-bag-shopping me-3"></i></a>
+                <p class="mb-0">My Orders</p>
+              </li></a>
+             <li class="list-group-item d-flex align-items-center p-3 me-3 ms-3">
+                <a href="/wishlist"><i class="fa-solid fa-heart me-3"></i></a>
+                <p class="mb-0">Wishlist</p>
+              </li>
+             
+            </ul>
+          </div>
+        </div> 
+      </div>
+      {{!-- User Data Starts --}}
+      <div class="col-lg-8">
+        {{!-- first section user Data display --}}
+        <div class="card mb-4">
+          <section id="Personal">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-sm-3">
+                <p class="mb-0">Full Name</p>
+              </div>
+              <div class="col-sm-9">
+                <p class="text-muted mb-0">{{users.name}}</p>
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <p class="mb-0">Email</p>
+              </div>
+              <div class="col-sm-9">
+                <p class="text-muted mb-0">{{users.email}}</p>
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <p class="mb-0">Phone</p>
+              </div>
+              <div class="col-sm-9">
+                <p class="text-muted mb-0">{{users.phone}}</p>
+              </div>
+            </div>
+            <hr>
+            
+           
+            
+          </div>
+          </section>
+        </div>
+       
+        <div class="card mb-4">
+          <form action="/editAddress/{{AddressDetails.id}}" method="post">
+          <section id="addaddress">
+          <div class="card-header py-3">
+            <h5 class="mb-0">Edit Address</h5>
+          </div>
+          
+          <div class="card-body">
+           
+            <div class="row">
+              
+              <div class="col-md-6">
+                        <div class="md-form mb-0">
+                            <input type="text" id="name" name="name" class="form-control" value="{{users.name}}">
+                            <label for="name" class="">Name</label>
+                        </div>
+              </div>
+              <div class="col-md-6">
+                        <div class="md-form mb-0">
+                            <input type="text" id="phone" name="phone" class="form-control" value="{{users.phone}}">
+                            <label for="phone" class="">Phone</label>
+                        </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                        <div class="md-form mb-0">
+                            <input type="text" id="pincode" name="pincode" class="form-control" value="{{AddressDetails.Pincode}}">
+                            <label for="pincode" class="">Pincode</label>
+                        </div>
+              </div>
+              <div class="col-md-6">
+                        <div class="md-form mb-0">
+                            <input type="text" id="state" name="state" class="form-control" value="{{AddressDetails.State}}">
+                            <label for="state" class="">State</label>
+                        </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="md-form mb-0">
+                <input type="text" id="address" name="address" class="form-control" value="{{AddressDetails.Address}}">
+                  <label for="address" class="">Address</label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                        <div class="md-form mb-0">
+                            <input type="text" id="locality" name="locality" class="form-control" value="{{AddressDetails.Locality}}">
+                            <label for="locality" class="">Locality</label>
+                        </div>
+              </div>
+              <div class="col-md-6">
+                        <div class="md-form mb-0">
+                            <input type="text" id="city" name="city" class="form-control" value="{{AddressDetails.City}}">
+                            <label for="city" class="">City/District</label>
+                        </div>
+              </div>
+              <div class="col-md-6">
+                        <div class="md-form mb-0">
+                            <input type="text" id="id" hidden name="id" class="form-control" value="{{AddressDetails.id}}">
+                            
+                        </div>
+              </div>
+            </div><hr>
+          </div>
+          <div class="card-header py-3 text-center">
+            
+              <button type="submit" class="btn btn-outline-dark">Save</button>
+              
+            
+          </div>
+         
+          </section>
+          </form>
+        </div>
+        
+          </section>
+        </div>
+        
+        
+        
+        
+      </div>
+      
+      
+    </div>
+ 
+ </div>
+</section>
+
+
+
+
+
+

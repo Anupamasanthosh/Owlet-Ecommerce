@@ -1,0 +1,383 @@
+{{!-- brand display section --}}
+
+{{!-- product display section --}}
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<style>
+.clr{
+display: none;
+}
+
+.displaybtn{
+display: block;
+}
+
+
+</style>
+
+<section class="h-100 gradient-custom">
+  <div class="container py-5">
+    <form action="/proceed" method="post" id="checkOut">
+      <div class="row d-flex justify-content-center my-4">
+        <div class="col-md-8">
+
+          <div class="row">
+            <div class="card mb-4 p-0">
+              <div class="card-header py-3">
+                <h5 class="mb-0">Select Address</h5>
+              </div>
+              <div class="card-body">
+                <!-- Single item -->
+                <div class="row">
+                  {{#each address}}
+                    <div class="form-check">
+                      <input class="form-check-input" type="radio"  name="address" id="checkbox1"value="{{this.Address}},{{this.Pincode}},{{this.Pincode}},{{this.State}},{{this.Locality}},{{this.City}}"/>
+                      <label class="form-check-label" for="checkBox1">
+                        {{this.Address}}
+                      </label><a href="/edit-checkOutAddress/{{this.id}}">
+                <i class="fa-solid fa-pen-to-square me-5"></i>
+                </a>
+                    </div>
+                    <hr class="my-4" />
+                  {{/each}}
+
+                </div>
+
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="card mb-4 p-0">
+              <div class="card-header py-3">
+                <h5 class="mb-0">Select Payment</h5>
+              </div>
+              <div class="card-body">
+                <!-- Single item -->
+                <div class="row">
+
+                  <div class="form-check">
+                    <input
+                      type="radio"
+                      class="form-check-input"
+                      id="checkbox3"
+                      
+                      name="payment"
+                      value="COD"
+                      onclick="displayProceed()"
+                    />COD
+                    <label class="form-check-label" for="checkbox3"></label>
+                  </div>
+                  <hr class="my-4" />
+                  <div class="form-check">
+                    <input
+                      type="radio"
+                      class="form-check-input"
+                      id="checkbox4"
+                      name="payment"
+                      
+                      value="Razorpay"
+                      onclick="displayProceed()"
+                    />Razor Pay
+                    <label class="form-check-label" for="checkbox4"></label>
+                  </div>
+                  <hr class="my-4" />
+                  <div class="form-check">
+                    <input
+                      type="radio"
+                      class="form-check-input"
+                      id="checkbox4"
+                      name="payment"
+                      
+                      value="paypal"
+                      onclick="displayPaypal()"
+                    />Paypal
+                    <label class="form-check-label" for="checkbox4"></label>
+                  </div>
+
+                </div>
+
+                <input
+                  type="text"
+                  class=""
+                  id="user"
+                  
+                  name="user"
+                  value="{{users._id}}"
+                  hidden
+                />
+                <input
+                  type="text"
+                  class=""
+                  id="amount"
+                  
+                  name="amount"
+                  value="{{totalValue}}"
+                  hidden
+                />
+
+              </div>
+            </div>
+          </div>
+          <div class="row">
+           <a href="/cart" >Go Back</a>
+          </div>
+
+        </div>
+
+        <div class="col-md-4">
+          <div class="card mb-4">
+            <div class="card-header py-3">
+              <h5 class="mb-0">Summary</h5>
+            </div>
+            <div class="card-body">
+              <ul class="list-group list-group-flush">
+                <li
+                  class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0"
+                >
+                  Total Price
+                  <span id="total">{{totalValue}}</span>
+                </li>
+                <li
+                  class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0"
+                >
+                  Discount
+                  <span></span>
+                </li>
+                <li
+                  class="list-group-item d-flex justify-content-between align-items-center px-0"
+                >
+                  Shipping
+                  <span class="text-success">free Shipping</span>
+                </li>
+                  
+                     <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+                      coupons
+                        <span>
+                          <input type="text" name="coupons" id="coupon_code"  placeholder="Coupon Code Here" >
+                            <a onclick="couponApply()"class="btn btn-outline-dark">Apply</a>
+                        </span>
+                    </li>
+                    <li id="View" class="list-group-item d-flex justify-content-between align-items-center px-0 text-danger">
+                       <h4 id="views" class="text-danger"></h4>
+                        <h6 id="views1" class="text-danger"></h6>
+                        
+                    </li>
+
+                
+                <li
+                  class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 mb-3"
+                >
+                  <div>
+                    <strong>Total amount</strong>
+                    <strong>
+                      <p class="mb-0">(including VAT)</p>
+                    </strong>
+                  </div>
+                  <span id="total1"><strong>{{totalValue}}</strong></span>
+                </li>
+                
+              </ul>
+
+              <div class="clr" id="Proceed">
+               
+                  <button type="submit" class="btn btn-dark btn-block" id="checkOut">
+                    Proceed
+                  </button>
+             
+              </div>
+              <div class="clr" id="paypal">
+               
+                 
+             
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+
+</section>
+ <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+<script>
+
+
+  function couponApply(){
+    
+    const couponCode = document.getElementById("coupon_code").value
+    console.log(couponCode)
+    $.ajax({
+      url:'/applyCoupon',
+      method:'post',
+      data:{couponCode},
+      success:(total)=>
+      {
+        if(total.status)
+        {
+        Swal.fire({
+         
+        icon: 'success',
+        title: 'Coupon applied successfully',
+        showConfirmButton: false,
+        timer: 1500
+        })
+        
+        
+        
+        console.log('helloooooo',total)
+        document.getElementById("total1").innerHTML=total.total
+        document.getElementById('amount').value=total.total
+        document.getElementById('views').innerHTML=couponCode
+        document.getElementById('views1').innerHTML='Coupon Applied'
+        }
+        else
+        {
+          Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Minimum amount is required',
+  
+        })
+         document.getElementById('View').innerHTML='Coupon not valid'
+         
+        }  
+       
+        
+        
+      }
+     
+    })
+   
+  }
+  
+ $('#checkOut').submit((e)=>
+   { 
+     console.log('heyyy')
+    e.preventDefault() 
+    $.ajax({
+     url:'/proceed',
+     method:'post',
+     data:$('#checkOut').serialize(),
+      success:(response)=>
+      {
+    if(response.codStatus) 
+    {
+      location.href='/orderPlaced'
+    } 
+    else if(response.paypalStatus){
+      console.log('hello there')
+      console.log(response)
+      location.href='/orderPlaced'
+    }
+    else
+    {
+      console.log("helloooo")
+      console.log('hey',response)
+      razorpay(response)
+    } 
+    }
+  }) 
+})
+function razorpay(order)
+       {
+        
+        var options = {
+        "key": "rzp_test_SDG175if3j6GAl", // Enter the Key ID generated from the Dashboard
+        "amount": order.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+        "currency": "INR",
+        "name": "Easy Find",
+        "description": "Test Transaction",
+        "image": "https://example.com/your_logo",
+        "order_id":order.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+        "handler": function (response){
+            //alert(response.razorpay_payment_id);
+            //alert(response.razorpay_order_id);
+            //alert(response.razorpay_signature)
+           
+          verifyPayment(response,order)
+          },
+             "prefill": {
+            "name": order.id,
+            "email": "",
+            "contact": ""
+          },
+            "notes": {
+            "address": "Razorpay Corporate Office"
+          },
+            "theme": {
+            "color": "#3399cc"
+          }
+      };
+      var rzp1 = new Razorpay(options);
+       rzp1.open();
+    }
+  function verifyPayment(payment,order)
+  {
+    
+    $.ajax({
+      url:'/verifyPayment',
+      data:{
+        payment,
+        order
+      },
+      method:'post',
+      success:(response)=>
+      {
+        if(response.status)
+        {
+          location.href="/orderPlaced"
+        }
+        else{
+          alert('something went wrong')
+        }
+      }
+    })
+  }
+  function displayProceed()
+  {
+    let list=document.getElementById('Proceed').classList
+    list.add('displaybtn')
+    let list2=document.getElementById('paypal').classList
+    list2.remove('displaybtn')
+  }
+  function displayPaypal()
+  {
+    let list=document.getElementById('Proceed').classList
+    list.remove('displaybtn')
+    let list2=document.getElementById('paypal').classList
+    list2.add('displaybtn')
+  }
+
+paypal.Buttons({
+        // Sets up the transaction when a payment button is clicked
+        createOrder: (data, actions,order) => {
+          return actions.order.create({
+            purchase_units: [{
+              amount: {
+                value:'77.4' // Can also reference a variable or function
+              }
+            }]
+          });
+        },
+        // Finalize the transaction after payer approval
+        onApprove: (data, actions) => {
+          return actions.order.capture().then(function(orderData) {
+            // Successful capture! For dev/demo purposes:
+            console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
+            const transaction = orderData.purchase_units[0].payments.captures[0];
+            
+            // When ready to go live, remove the alert and show a success message within this page. For example:
+            // const element = document.getElementById('paypal-button-container');
+            // element.innerHTML = '<h3>Thank you for your payment!</h3>';
+            // Or go to another URL:  actions.redirect('thank_you.html');
+            
+            $('#Proceed').trigger('click')
+            console.log('woooow')
+          });
+        }
+  }).render('#paypal');
+
+  
+
+</script>

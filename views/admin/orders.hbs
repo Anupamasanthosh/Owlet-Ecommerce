@@ -1,0 +1,247 @@
+<link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap5.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.3.0/css/responsive.bootstrap5.min.css">
+
+
+<link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.2.3/css/buttons.dataTables.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap5.min.js"></script>
+<script src="https://cdn.datatables.net/responsive/2.3.0/js/dataTables.responsive.min.js"></script>
+<script src="https://cdn.datatables.net/responsive/2.3.0/js/responsive.bootstrap5.min.js"></script>
+<script src="//cdn.datatables.net/plug-ins/1.10.11/sorting/date-eu.js" type="text/javascript"></script>
+
+<script src="https://cdn.datatables.net/buttons/2.2.3/js/dataTables.buttons.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.html5.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.print.min.js"></script>
+<div class="container me-5 mt-5">
+  <div class="row ">
+      <div class="col">
+        <nav aria-label="breadcrumb" class="bg-light rounded-3 p-3 mb-4">
+          <ol class="breadcrumb mb-0">
+            <li class="breadcrumb-item"><a href="/admin/adminDash">Home</a></li>
+            <li class="breadcrumb-item"><a href="/admin/orders">All Orders</a></li>
+            
+          </ol>
+        </nav>
+      </div>
+  </div> 
+</div>
+<section class="container me-5 mt-3 mb-5">
+  <div class="row mb-5">
+    <div class="mask d-flex align-items-center h-100">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-12">
+            <div class="card shadow-2-strong" style="background-color: #f5f7fa;">
+              <div class="card-body">
+                <div class="table-responsive">
+                  <table class="table table-borderless mb-0" id="myTable">
+                    <thead>
+                      <tr>            
+                        <th scope="col">Customer Id</th>
+                        <th scope="col">Products</th>
+                        <th scope="col">Order Date</th>
+                        <th scope="col">Total Price</th>
+                        <th scope="col">Payment Method</th>
+                        <th scope="col">Delivery Status</th>
+                        <th scope="col">Return Request</th>
+                        <th scope="col">Cancel Order</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {{#each orders}}
+                        <tr>
+                          <td>{{this.userId}}</td>
+                          <td>{{#each this.products}}
+                              {{this.product.Name}}
+                              {{/each}}
+                          </td>
+                          <td>{{this.date}}</td>
+                          <td>{{this.totalAmount}}</td>
+                          <td>{{this.payment}}</td>
+                            
+                          <td>
+                            
+                            <form action="/admin/updateStatus/{{this._id}}" method="post">
+                            {{#ifCond2 this.status 'Placed'}}
+                              <select id="Status"name="Status">
+                                <option selected value="{{this.product.status}}"name="{{this.status}}" >{{this.status}}</option>
+                                <option value="Shipped"name="Shipped">Shipped</option>
+                                <option value="Out for delivery" name="Out for delivery">Out for delivery</option>
+                                <option value="Deliverd" name="Deliverd">Deliverd</option>
+                              </select>
+                              <button type="submit" class="ms-2 btn btn-dark">Update</button>
+                            {{/ifCond2}}
+                            {{#ifCond2 this.status 'Shipped'}}
+                              <select id="Status"name="Status">
+                                <option selected value="{{this.product.status}}"name="{{this.status}}" >{{this.status}}</option>
+                                <option value="Shipped"name="Shipped">Shipped</option>
+                                <option value="Out for delivery" name="Out for delivery">Out for delivery</option>
+                                <option value="Deliverd" name="Deliverd">Deliverd</option>
+                              </select>
+                              <button type="submit" class="ms-2 btn btn-dark">Update</button>
+                            {{/ifCond2}}
+                            {{#ifCond2 this.status 'Out for delivery'}}
+                              <select id="Status"name="Status">
+                                <option selected value="{{this.product.status}}"name="{{this.status}}" >{{this.status}}</option>
+                                <option value="Deliverd" name="Deliverd">Deliverd</option>
+                              </select>
+                              <button type="submit" class="ms-2 btn btn-dark">Update</button>
+                            {{/ifCond2}}
+                            {{#ifCond2 this.status 'Deliverd'}}
+                                Delivered
+                            {{/ifCond2}}
+                            {{#ifCond2 this.status 'Pending'}}
+                                 Pending
+                            {{/ifCond2}}
+                            {{#ifCond2 this.status 'canceled by user'}}
+                                Canceled By User
+                             {{/ifCond2}}
+                              {{#ifCond2 this.status 'Canceled by Admin'}}
+                               Canceled By Admin
+                              {{/ifCond2}}
+                              
+                            </form>
+                          </td>
+                          <td>
+                            {{#if this.Reason}}
+                            {{#if (eq this.reasonApproved true)}}
+                                Return Accepted
+                             {{else if (eq this.reasonApproved false)}}
+                              Return Rejected
+                            {{else}}
+                            <button type="button" class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#exampleModal{{this._id}}">
+                               View Request
+                            </button>
+                            {{/if}}
+                           
+                            
+                            <div class="modal fade" id="exampleModal{{this._id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                              <div class="modal-dialog">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Return Request</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                  </div>
+                                  <div class="modal-body">
+        
+                                   {{this.Reason}}
+       
+                                  </div>
+                                  <div class="modal-footer">
+                                   
+                                    <button type="button" onclick="acceptRequest('{{this._id}}')" class="btn btn-secondary">Accept</button>
+                                      <button type="button" onclick="rejectRequest('{{this._id}}')" class="btn btn-primary">Reject</button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+
+                           {{/if}}
+                          </td>
+                           <td>
+                          {{#ifCond this.status 'Canceled by Admin'}}
+                          {{#ifCond this.status 'canceled by user'}}
+                          {{#ifCond this.status 'Deliverd'}}
+                          {{#ifCond this.status 'Pending'}}
+                         <a onclick="return confirm('Are you sure want to delete this order')" href="/admin/removeOrder/{{this._id}}"><i class="fa-solid fa-ban ms-5"></i></a></span>
+                          </a>
+                          {{/ifCond}}
+                          {{/ifCond}}
+                          {{/ifCond}}
+                          {{/ifCond}}
+                          </td>
+                        </tr> 
+                        
+                      {{/each}}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="container">
+      <div class="admin">
+          
+      </div>
+    </div>
+  </div>
+</section>
+<script>
+  $(document).ready( function () {
+    $('#myTable').DataTable({
+     dom: 'Bfrtip',
+      buttons: [
+          {
+              extend: 'excel',
+              text: 'Excel',
+              className: 'btn btn-default',
+              exportOptions: {
+                  columns: ':not(.notExport)'
+              }
+          },
+          {
+              extend: 'pdf',
+              text: 'PDF',
+              className: 'btn btn-default',
+              exportOptions: {
+                  columns: ':not(.notExport)'
+              }
+          },
+          {
+                  extend: 'print',
+                  text: 'Print',
+                  className: 'btn btn-default',
+                  exportOptions: {
+                      columns: ':not(.notExport)'
+                  }
+              }
+      ],
+      responsive: {
+          details: {
+              display: $.fn.dataTable.Responsive.display.modal({
+                  header: function (row) {
+                      var data = row.data();
+                      return 'Details for ' +data[1];
+                  }
+              }),
+              renderer: $.fn.dataTable.Responsive.renderer.tableAll({
+                  tableClass: 'table'
+              })
+          }
+      }
+  });
+} );
+function acceptRequest(orderId)
+{
+  console.log(orderId)
+  $.ajax({
+    url:'/admin/returnApprove/'+orderId,
+    method:'get',
+    success:()=>
+    {
+     location.href="/admin/orders"
+    }
+  })
+}
+function rejectRequest(orderId)
+{
+  console.log(orderId)
+  $.ajax({
+    url:'/admin/returnReject/'+orderId,
+    method:'get',
+    success:()=>
+    {
+     location.href="/admin/orders"
+    }
+  })
+} 
+</script>

@@ -1,0 +1,368 @@
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
+<div class="container my-5">
+    <div class="row details-snippet1">
+        <div class="col-md-7">
+            <div class="row">
+                <div class="col-md-2 mini-preview">
+                    {{#each product.images}}
+                    <img class="img-fluid" src="/uploads/{{this.fileName}}" alt="Preview">
+                   {{/each}}
+                </div>
+                <div class="col-md-10">
+                    <div class="product-image">
+                        {{#with product.images.[0]}}
+                        <img class="img-fluid" src="/uploads/{{this.fileName}}" id="zoom" alt="Main Image">
+                        {{/with}}
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+        <div class="col-md-5">
+            <div class="category mt-3 mb-3"><span class="theme-text">Brand:</span>{{product.brand}}</div>
+            <div class="title">{{product.Name}}</div>
+            <div class="theme-text subtitle mt-3 mb-3">Brief Description:</div>
+            <div class="brief-description mb-4">
+                {{product.Description}}
+            </div>
+            <div class="ratings my-2">
+                <div class="stars d-flex">
+                    <div class="theme-text mr-2">Product Ratings: </div>
+                    <div>&#9733;</div>
+                    <div>&#9733;</div>
+                    <div>&#9733;</div>
+                    <div>&#9733;</div>
+                    <div>&#9733;</div>
+                    <div class="ml-2">(4.5) 50 Reviews</div>
+                </div>
+            </div>
+            <hr>
+            <div class="price my-2">
+                {{#if_eq product.offers}}
+                {{product.actualPrice}}
+                <span class="original-price ms-2">MRP</span>
+                <strike class="original-price ms-4">{{product.Price}}</strike>
+                <span class="original-price ms-3" style="color:blue; ">({{product.offers}}%Off)
+                </span>
+                {{else}}
+                <span class="original-price ms-2">MRP</span>
+                <span class="original-price ms-4">{{product.Price}}</span>
+                {{/if_eq}}
+            </div>
+            
+
+          <!-- TO REMOVE COLORS -->
+            
+            <div class="row">
+                <div class="col-md-9 mt-1"><span class="" style="color: green;">Inclusive of all taxes</span></div>
+            </div>
+           
+            <div class="row">
+                <div class="col-md-9 ms-5 mt-4"><button class="btn addBtn btn-block ms-5" onclick="addtoWish('{{product._id}}')">Add to Wishlist</button>
+                <span><button class="btn addBtn btn-block ms-5" onclick="addToCart('{{product._id}}')">Add to Cart</button></span></div>
+            </div>
+            
+            <hr>
+             <div class="theme-text subtitle mt-3 mb-3">100% Original Products</div>
+             <div class="theme-text subtitle mt-3 mb-3">Pay on delivery might be available</div>
+             <div class="theme-text subtitle mt-3 mb-3">Easy 30 days returns and exchanges</div>
+             <div class="theme-text subtitle mt-3 mb-3">Try & Buy might be available</div>
+            <hr>
+            <div style="color: black;" class="theme-text mr-2">BEST OFFERS </div>
+            <div style="color: black;" class="theme-text subtitle mt-3 mb-3">Best Price:Rs. {{product.actualPrice}}</div>
+        </div>
+        
+         
+    </div>
+
+    {{!-- <div class="additional-details my-5 text-center">
+        <!-- Nav pills -->
+        <ul class="nav nav-tabs justify-content-center">
+            <li class="nav-tabs">
+                <a class="nav-link active" data-toggle="tab" data-bs-toggle="tab" href="#home">Description</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" data-bs-toggle="tab" href="#menu1">Reviews</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" data-bs-toggle="tab" href="#menu2">Specifications</a>
+            </li>
+        </ul>
+
+        <!-- Tab panes -->
+        <div class="tab-content mt-4 mb-3">
+            <div class="tab-pane container active" id="home">
+                <div class="description">
+                    Lorem ipsum dolor sit, amet consectetur adipisicing elit. Provident magni assumenda consectetur facere eius. Minus reprehenderit placeat ullam vel ab eaque sequi impedit, ipsum soluta temporibus fugit ipsa. Dolor libero modi molestiae dicta, vitae minus laborum error cum consequatur autem minima eveniet porro obcaecati quibusdam possimus eos, debitis sint magnam, explicabo accusantium aspernatur ipsa repellat tempore nihil. Cum placeat voluptate dignissimos dicta harum consectetur, nemo debitis tempore. Quod culpa perspiciatis unde natus. Modi expedita, ab repellendus reiciendis sed voluptate, culpa laborum ad, consectetur quas tempora quo? Quibusdam doloribus magnam maxime, accusamus officiis odit reiciendis labore laudantium. Molestiae corporis temporibus ad?
+                </div>
+            </div>
+            <div class="tab-pane container fade" id="menu1">
+                <div class="review">
+                    <p>PUT REVIEWS DESIGN HERE</p>
+                </div>
+            </div>
+            <div class="tab-pane container fade" id="menu2">
+                <div class="specification">
+                    <p>PUT SPECIFICATIONS HERE</p>
+                </div>
+            </div>
+        </div>
+    </div> --}}
+
+
+
+    {{!-- <div class="related-products details-snippet1">
+
+        <div class="related-heading theme-text">Related Products</div>
+
+        <div class="row">
+
+                            <div class="col-md-3">
+                    <div class="related-product">
+                        <img class="img-fluid" src="https://source.unsplash.com/gsKdPcIyeGg" alt="Related Product">
+                    </div>
+                    <div class="related-title">Lovely Black Dress</div>
+                    <div class="d-flex">
+                        <div class="related-price mr-auto">$100.00</div>
+                        <div class="stars d-flex">
+                            <div>&#9733;</div>
+                            <div>&#9733;</div>
+                            <div>&#9733;</div>
+                            <div>&#9733;</div>
+                            <div>&#9733;</div>
+                        </div>
+                    </div>
+                </div>
+                            <div class="col-md-3">
+                    <div class="related-product">
+                        <img class="img-fluid" src="https://source.unsplash.com/sg_gRhbYXhc" alt="">
+                    </div>
+                    <div class="related-title">Lovely Dress With Patterns</div>
+                    <div class="d-flex">
+                        <div class="related-price mr-auto">$1199.00</div>
+                        <div class="stars d-flex">
+                            <div>&#9733;</div>
+                            <div>&#9733;</div>
+                            <div>&#9733;</div>
+                            <div>&#9733;</div>
+                            <div>&#9733;</div>
+                        </div>
+                    </div>
+                </div>
+                            <div class="col-md-3">
+                    <div class="related-product">
+                        <img class="img-fluid" src="https://source.unsplash.com/gJZQcirK8aw" alt="">
+                    </div>
+                    <div class="related-title">Lovely Fashion Dress</div>
+                    <div class="d-flex">
+                        <div class="related-price mr-auto">$200.00</div>
+                        <div class="stars d-flex">
+                            <div>&#9733;</div>
+                            <div>&#9733;</div>
+                            <div>&#9733;</div>
+                            <div>&#9733;</div>
+                            <div>&#9733;</div>
+                        </div>
+                    </div>
+                </div>
+                            <div class="col-md-3">
+                    <div class="related-product">
+                        <img class="img-fluid" src="https://source.unsplash.com/qbB_Z2pXLEU" alt="">
+                    </div>
+                    <div class="related-title">Lovely Red Dress</div>
+                    <div class="d-flex">
+                        <div class="related-price mr-auto">$120.00</div>
+                        <div class="stars d-flex">
+                            <div>&#9733;</div>
+                            <div>&#9733;</div>
+                            <div>&#9733;</div>
+                            <div>&#9733;</div>
+                            <div>&#9733;</div>
+                        </div>
+                    </div>
+                </div>
+            
+
+        </div>
+    </div> --}}
+
+
+
+</div>
+
+<style>
+   
+.images:hover
+{
+    transform: scale(.7);
+
+}
+    .details-snippet1 {
+        color: #585656;
+    }
+
+    /* Main text uses this styling and color */
+    .details-snippet1 .theme-text {
+        color: purple;
+        font-weight: bold;
+    }
+
+    .details-snippet1 .mini-preview img {
+        border: 1px solid #585656;
+        border: 1px solid purple;
+        margin-bottom: 8px;
+    }
+
+    .details-snippet1 .title {
+        color: #464343;
+        font-weight: bold;
+        font-size: 2rem;
+    }
+
+    .details-snippet1 .price {
+        font-weight: bold;
+        font-size: 1.8rem;
+    }
+
+    .details-snippet1 .original-price {
+        font-weight: normal;
+        font-size: 20px;
+    }
+
+    .brief-description {
+        /* color: #585656; */
+        color: #464343;
+    }
+
+
+    .select-colors .color {
+        display: inline-block;
+        border: 1px solid grey;
+        height: 35px;
+        width: 35px;
+        border-radius: 50%;
+        margin-right: 5px;
+        background-color: black;
+    }
+
+    .select-colors .color.red {
+        background-color: red;
+    }
+
+    .select-colors .color.silver {
+        background-color: silver;
+    }
+
+    .select-colors .color.black {
+        background-color: black;
+    }
+
+
+
+    .addBtn {
+        background-color: purple;
+        color: white;
+        text-transform: uppercase;
+    }
+
+    .addBtn:hover {
+        background-color: #500150;
+        color: white;
+    }
+
+
+    .related-heading {
+        text-align: center;
+        font-size: 1.5rem;
+        font-weight: bold;
+        /* color: #464343; */
+    }
+
+    .details-snippet1 .related-title {
+        color: #464343;
+        font-weight: bold;
+    }
+
+    .details-snippet1 .related-price {
+        color: #464343;
+        font-weight: bold;
+    }
+
+
+
+    .additional-details .nav-link {
+        border: none;
+        color: #464343;
+    }
+
+    .additional-details .nav-link.active {
+        background-color: white;
+        color: #464343;
+        border: none;
+        border-bottom: 4px solid purple;
+    }
+</style>
+<script>
+    $(document).ready(function()
+{
+    $('.mini-preview img').click(function()
+    {
+    var image=$(this).attr('src')
+    $('.product-image img').attr('src',image)
+    })
+    $('#zoom').imagezoomsl({
+        zoomrange:[4,4]
+    })
+    
+})
+
+function addToCart(proId)
+  {
+      $.ajax({
+      url:'/add-to-cart/'+proId,
+      method:'get',
+      success:(response)=>
+      {
+        
+        Swal.fire({
+         position: 'top-end',
+        icon: 'success',
+        title: 'Product added to cart',
+        showConfirmButton: false,
+        timer: 1500
+        })
+        
+        if(response.status)
+        {
+          let count=$('#cart-count').html()
+          count=parseInt(count)+1
+          $("#cart-count").html(count)
+        }
+        {{!-- location.reload() --}}
+       
+      }
+    })
+  }
+  function addtoWish(proId)
+  {
+    $.ajax({
+      url:'/wishlist/'+proId,
+      method:'get',
+      success:(response)=>
+      {
+        Swal.fire({
+        position: 'bottom-end',
+        icon: 'Success',
+        title:'Product added to Wishlist',
+        showConfirmButton: false,
+        timer: 1500
+        })
+       
+      }
+    })
+  }
+
+</script>

@@ -1,0 +1,419 @@
+
+<section>
+<div class="container me-5 mt-5">
+  <div class="row ">
+      <div class="col">
+        <nav aria-label="breadcrumb" class="bg-light rounded-3 p-3 mb-4">
+          <ol class="breadcrumb mb-0">
+            <li class="breadcrumb-item"><a href="/admin/adminDash">Home</a></li>
+            <li class="breadcrumb-item"><a href="/admin/adminDash">Admin Dashboard</a></li>
+            
+          </ol>
+        </nav>
+      </div>
+    </div> 
+    </div>
+<section class="container me-5 mt-5">
+  <div class="row">
+      <div class="container p-5">
+        <div class="row row-cols-1 row-cols-xs-2 row-cols-sm-2 row-cols-lg-4 g-3">
+            <div class="col">
+                <div class="card h-100 shadow-sm">
+                    <div class="text-center">
+           
+
+                        <div class="img-hover-zoom img-hover-zoom--colorize">
+                            <a href="/admin/adminHome">
+                            <img class="shadow" src="/images/product-icon-simple-element-vector-27077910.jpg"
+                                alt="Another Image zoom-on-hover effect">
+                            </a>
+                        </div>
+
+                    </div>
+           
+                    <div class="card-body">
+                        <div class="clearfix mb-3">
+
+
+         
+
+                        </div>
+
+
+                        <div class="my-2 text-center">
+
+                            <h3>Total Products</h3>
+
+                        </div>
+                        <div class="mb-3">
+
+                            <h2 class="text-uppercase text-center role">
+                              {{totalProduct}}
+                            </h2>
+
+                        </div>
+                       
+                        
+        
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card h-100 shadow-sm">
+                    <div class="text-center">
+               
+
+                        <div class="img-hover-zoom img-hover-zoom--colorize">
+                             <a href="/admin/user-manage">
+                            <img class="shadow" src="/images/customers-vector-27753670.jpg"
+                                alt="Another Image zoom-on-hover effect">
+                            </a>
+                        </div>
+
+                    </div>
+               
+                    <div class="card-body">
+                        <div class="clearfix mb-3">
+
+
+              
+
+                        </div>
+
+
+                        <div class="my-2 text-center">
+                           
+                            <h3>Followers</h3>
+                           
+                        </div>
+                        <div class="mb-3">
+
+                            <h2 class="text-uppercase text-center role">{{totalCustomers}}</h2>
+
+                        </div>
+                      
+
+                     
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card h-100 shadow-sm">
+                    <div class="text-center">
+                 
+
+                        <div class="img-hover-zoom img-hover-zoom--colorize">
+                             <a href="/admin/orders">
+                            <img class="shadow" src="/images/order-vector-30565106.jpg"
+                                alt="Another Image zoom-on-hover effect">
+                            </a>
+                        </div>
+
+                    </div>
+               
+                    <div class="card-body">
+                        <div class="clearfix mb-3">
+
+
+
+                        </div>
+
+
+                        <div class="my-2 text-center">
+                           
+                            <h3>Total Orders</h3>
+                            </a>
+                        </div>
+                        <div class="mb-3">
+
+                            <h2 class="text-uppercase text-center role">{{totalOrder}}</h2>
+
+                        </div>
+                      
+
+              
+                    </div>
+                </div>
+            </div>
+           
+        </div>
+    </div>
+
+
+
+    </div>
+
+  </div>
+ 
+ 
+<section class="bg-white py-5 mx-3">
+        <div class="row">
+            <div class="" style="width: 50%;">
+                <canvas id="bar-chart" ></canvas>
+            </div>
+            <div class="col-lg-5"  style="width: 50%;">
+                <canvas id="circle-chart" style="display: block; box-sizing: border-box; height: 310px; width: 450px;"></canvas>
+            </div>
+        </div>
+        <div class="row">
+         <div class="col-lg-5"  style="width: 60%;">
+                <canvas id="finalchart" style="display: block; box-sizing: border-box; height: 310px; width: 450px;"></canvas>
+            </div>
+            </div>
+    </section>
+</div>
+</section>
+
+<script>
+    let monthName = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+    let monthlyProfit = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+    let weekly = [0, 0, 0, 0, 0, 0, 0]
+    let weekName = ["Sunday", "Monday", "Tuesday", "WednesDay", "Thursday", "Friday", "Saturday"]
+    let paymethod=["Razorpay","Cash on Delivery"]
+    let payamount=[0,0,0]
+    let barChart = document.getElementById("bar-chart").getContext('2d')
+    let circleChart = document.getElementById("circle-chart").getContext('2d')
+    let finalchart=document.getElementById("finalchart").getContext('2d')
+    document.addEventListener('DOMContentLoaded', () => 
+    {
+        fetch('/admin/getChartData', 
+        {
+            method: 'get',
+            credentials: 'include',
+            headers: { 'Content-Type': 'application/json' }
+        }).then(res => res.json()).then(res => 
+        {
+            
+            let { data, weeklyReport } = res;
+            for (i = 0; i < data.length; ++i) 
+            {
+                switch (data[i].month)
+                 {
+                    case 1:
+                        monthlyProfit[0] = data[i].total
+                        break;
+                    case 2:
+                        monthlyProfit[1] = data[i].total
+                        break;
+                    case 3:
+                        monthlyProfit[2] = data[i].total
+                        break;
+                    case 4:
+                        monthlyProfit[3] = data[i].total
+                        break;
+                    case 5:
+                        monthlyProfit[4] = data[i].total
+                        break;
+                    case 6:
+                        monthlyProfit[5] = data[i].total
+                        break;
+                    case 7:
+                        monthlyProfit[6] = data[i].total
+                        break;
+                    case 8:
+                        monthlyProfit[7] = data[i].total
+                        break;
+                    case 9:
+                        monthlyProfit[8] = data[i].total
+                        break;
+                    case 10:
+                        monthlyProfit[9] = data[i].total
+                        break;
+                    case 11:
+                        monthlyProfit[10] = data[i].total
+                        break;
+                    case 12:
+                        monthlyProfit[11] = data[i].total
+                        break;
+                }
+            }
+            console.log(monthlyProfit)
+            const months = monthName;
+            const data1 = {
+                labels: months,
+                datasets: [{
+                    label: 'Monthly sales',
+                    backgroundColor: "blue",
+                    borderColor: 'rgb(255, 99, 132)',
+                    data: monthlyProfit,
+                }]
+            };
+            const monthlyconfig = {
+                type: 'bar',
+                data: data1,
+                options: {}
+            };
+            let chart1 = new Chart(barChart, monthlyconfig)
+            for (i = 0; i < weeklyReport.length; ++i) {
+                switch (weeklyReport[i].date) {
+                    case 1:
+                        weekly[0] = weeklyReport[i].total
+                        break;
+                    case 2:
+                        weekly[1] = weeklyReport[i].total
+                        break;
+                    case 3:
+                        weekly[2] = weeklyReport[i].total
+                        break;
+                    case 4:
+                        weekly[3] = weeklyReport[i].total
+                        break;
+                    case 5:
+                        weekly[4] = weeklyReport[i].total
+                        break;
+                    case 6:
+                        weekly[5] = weeklyReport[i].total
+                        break;
+                    case 7: weekly[6] = weeklyReport[i].total
+                        break;
+                }
+            }
+
+            
+            //weekly sales
+            const labels = weekName;
+            const data2 = {
+                labels: labels,
+                datasets: [{
+                    label: 'Weekly sales',
+                    backgroundColor: 'red',
+                    borderColor: 'red',
+                    data: weekly,
+                }]
+            };
+            const config = {
+                type: 'line',
+                data: data2,
+                options: {}
+            };
+            let chart2 = new Chart(circleChart, config)
+
+
+
+
+             {{!-- for (i = 0; i < weeklyReport.length; ++i) {
+                switch (weeklyReport[i].method) {
+                    case 1:
+                        payamount[0] = weeklyReport[i].total
+                        break;
+                    case 2:
+                        payamount[1] = weeklyReport[i].total
+                        break;
+                    case 3:
+                        payamount[2] = weeklyReport[i].total
+                        break;
+                }
+            }
+            const paymentmethod=paymethod;
+            const data3={
+                labels:paymentmethod,
+                datasets:[{
+                    label: 'Payment Methods',
+                    backgroundColor: "green",
+                    borderColor: 'rgb(255, 99, 132)',
+                    data: payamount,
+                }]
+            };
+             const config = {
+                type: 'polarArea',
+                data: data3,
+                options: {}
+            };
+            let chart3 = new Chart(finalchart,config)   --}}
+        })
+    })
+    
+  
+</script>
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+@import url("https://use.fontawesome.com/releases/v5.13.0/css/all.css");
+:root {
+    --font3: 'Roboto', sans-serif;
+}
+
+.h1,
+h1 {
+    font-size: 1.5rem;
+}
+
+.container-fluid {
+    max-width: 1400px;
+}
+
+.card {
+    background: #fff;
+    box-shadow: 0 6px 10px rgba(0, 0, 0, .08), 0 0 6px rgba(0, 0, 0, .05);
+    border: 1;
+    border-radius: 1rem;
+}
+
+.img-hover-zoom--colorize img {
+    border-radius: 50%;
+    width: 150px;
+    height: auto;
+    margin-top: 20px;
+    padding: 1px;
+    transition: transform .5s;
+    filter: grayscale(100%);
+}
+
+.img-hover-zoom--colorize:hover img {
+    filter: grayscale(0);
+    transform: scale(1.05);
+}
+
+.card h5 {
+    overflow: hidden;
+    height: 80px;
+    font-weight: 300;
+    font-size: 1rem;
+}
+
+.card h5 a {
+    color: black;
+    text-decoration: none;
+}
+
+.role {
+    color: #7a7a7a;
+}
+
+.box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.fab {
+    font-size: 1.5rem;
+    color: darkgray;
+    transition: transform .5s;
+}
+
+.fab:hover {
+    color: black;
+    transform: scale(1.1);
+}
+
+.card h2 {
+    font-size: 1rem;
+}
+
+
+/* MEDIA */
+
+@media only screen and (min-width: 1200px) {
+    .img-hover-zoom--colorize img {
+        width: 200px;
+    }
+}
+
+@media only screen and (min-width: 1200px) {
+    .h1,
+    h1 {
+        font-size: 2rem;
+    }
+}
+</style>

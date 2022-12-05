@@ -1,0 +1,213 @@
+
+
+<section>
+<div class="container me-5 mt-5">
+  <div class="row ">
+      <div class="col">
+        <nav aria-label="breadcrumb" class="bg-light rounded-3 p-3 mb-4">
+          <ol class="breadcrumb mb-0">
+            <li class="breadcrumb-item"><a href="/admin/adminDash">Home</a></li>
+            <li class="breadcrumb-item"><a href="/admin/adminHome">Products</a></li>
+            <li class="breadcrumb-item"><a href="/admin/add-category">Add Category</a></li>
+          </ol>
+        </nav>
+      </div>
+  </div> 
+</div>
+<section class="container me-5 mt-3">
+  <div class="row">
+    <div class="mask d-flex align-items-center h-100">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-12">
+            <div class="card shadow-2-strong" style="background-color: #f5f7fa;">
+              <div class="card-header px-4 py-5">
+            <h5 class="text-muted mb-0">Add Category</h5>
+          </div>
+          <div class="card-body">
+
+        
+    
+        <form
+          action="/admin/add-category"
+          method="post"
+          enctype="multipart/form-data"
+          id="myForm" 
+        >
+
+          <label for="">Name</label>
+          <input type="text" class="form-control col-xs-4" name="Name" id="Name" onkeyup="validateName()" />
+          <span id="name-error"></span><br>
+         
+          <label for="" class="mt-4">Description</label>
+          <input type="text" class="form-control" name="Description" id="Description" onkeyup="validateDescription()" />
+          <span id="description-error"></span><br>
+          <label for="" class="mt-4">Offer</label>
+          <input type="text" class="form-control" name="offer" id="offer" />
+          
+          
+          <label for="" class="mt-4">Image</label>
+          <input type="file" class="form-control" name="image" id="image"  onkeyup="validateImage()" />
+          <span id="image-error"></span><br>
+          <div >
+        <div id="image-box1" class="image-container"></div>
+        <div class="d-flex justify-content-end">
+        <a class="btn btn-sm btn-primary ms-3" id="crop-btn1" style=" margin-top: 10px; display: none;">Crop</a>
+        
+      
+          <a href="/admin/add-category" class="btn btn-sm btn-danger  ms-3" id="cancel-crop" style=" margin-top: 10px; display: none;">Cancel</a>
+         
+        </div>
+          <button type="submit" class="btn btn-dark mt-4">Add</button>
+          <span id="submit-error"></span>
+        </div>
+        </form>
+      </div>
+      
+    </div>
+  </div>
+</div>
+</section>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.11/cropper.css"></style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.11/cropper.js"></script>
+<script>
+  const form = document.getElementById("myForm"); 
+  const nameError =document.getElementById("name-error");
+  const descriptionError =document.getElementById("description-error");
+  const imageError=document.getElementById("image-error");
+  form.addEventListener('submit', e => {
+   if(validateName()&&validateDescription()&&validateImage())
+   {
+      console.log('hai') 
+    }
+  else{
+     e.preventDefault() 
+     var error=document.getElementById('submit-error') 
+     error.innerHTML='Fill all fields' 
+     error.style.color='Red' 
+     setTimeout(function()
+     { 
+      error.innerHTML=''
+
+      },3000);
+    } 
+    })
+  function validateName()
+   { 
+    console.log('validate name')
+    var name=document.getElementById('Name').value.trim(); 
+    if (name.length==0)
+     {
+    nameError.innerHTML='Name is Required';
+    nameError.style.color='red'
+    return false; 
+    } 
+    else{
+      nameError.innerHTML='Name is valid'; 
+    nameError.style.color='green' 
+    return true;
+    }
+   }
+   function validateDescription()
+   {
+    console.log('validate Description')
+    var description=document.getElementById('Description').value.trim();
+    if(description.length==0)
+    {
+      descriptionError.innerHTML='Description is required'
+      descriptionError.style.color='red'
+      return false
+    }
+    else{
+    descriptionError.innerHTML='Description is valid'; 
+    descriptionError.style.color='green' 
+    return true;
+    }
+   }
+   function validateImage()
+   {
+    console.log('validate image')
+    
+    var fileInput=document.getElementById('image');
+     var allowedExtensions =
+        /(\.jpg|\.jpeg|\.png|\.gif|\.webp)$/i;
+     var filePath = fileInput.value;
+        if (!allowedExtensions.exec(filePath)) 
+        {
+          imageError.innerHTML="Invalid file type";
+          imageError.style.color='Red' 
+          fileInput.value = '';
+          return false;
+        }
+        else if(document.getElementById('image').files.length==0)
+        {
+          imageError.innerHTML="No files selected"
+          imageError.style.color='red'
+          return false
+        }
+        else{
+         imageError.innerHTML='File is valid'; 
+         imageError.style.color='green' 
+          return true;
+        }
+    
+   }
+   const imagebox1 = document.getElementById('image-box1')
+    const crop_btn1 = document.getElementById('crop-btn1')
+    const input1 = document.getElementById('image')
+    // When user uploads the image this event will get triggered
+    input1.addEventListener('change', () => {
+      //if(imageError.innerHTML=="File is valid"){
+      // Getting image file object from the input variable
+      const img_data1 = input1.files[0]
+      // createObjectURL() static method creates a DOMString containing a URL representing the object given in the parameter.
+      // The new object URL represents the specified File object or Blob object.
+      const url1 = URL.createObjectURL(img_data1)
+      // Creating a image tag inside imagebox which will hold the cropping view image(uploaded file) to it using the url created before.
+      imagebox1.innerHTML =` <img src="${url1}" id="image1" style="width:50%;">`
+      // Storing that cropping view image in a variable
+      const image = document.getElementById('image')
+      // Displaying the image box
+      document.getElementById('image-box1').style.display = 'block'
+      // Displaying the Crop buttton
+      document.getElementById('crop-btn1').style.display = 'block'
+      document.getElementById('cancel-crop').style.display = 'block'
+      // Hiding the Post button
+      const cropper1 = new Cropper(image1, {
+        autoCropArea: 1,
+        viewMode: 1,
+        scalable: false,
+        zoomable: false,
+        movable: false,
+        minCropBoxWidth: 50,
+        minCropBoxHeight: 50,
+      })
+      // When crop button is clicked this event will get triggered
+        crop_btn1.addEventListener('click', () => {
+        // This method coverts the selected cropped image on the cropper canvas into a blob object
+        cropper1.getCroppedCanvas().toBlob((blob) => {
+          // Gets the original image data
+          let fileInputElement1 = document.getElementById('image');
+          // Make a new cropped image file using that blob object, image_data.name will make the new file name same as original image
+          let file1 = new File([blob], img_data1.name, { type: "image/*", lastModified: new Date().getTime() });
+          // Create a new container
+          let container1 = new DataTransfer();
+          // Add the cropped image file to the container
+          container1.items.add(file1);
+          // Replace the original image file with the new cropped image file
+          fileInputElement1.files = container1.files;
+          // document.getElementById('imgView1').src = URL.createObjectURL(fileInputElement1.files[0])
+          // Hide the cropper box
+          document.getElementById('image-box1').style.display = 'none'
+          // Hide the crop button
+          document.getElementById('crop-btn1').style.display = 'none'
+          document.getElementById('cancel-crop').style.display = 'none'
+  
+  
+        })
+      })
+      //}
+  })
+
+   
+</script>
